@@ -18,6 +18,7 @@ int is_equal_string(void * key1, void * key2);
 /* main function */
 int main(){
     Map * mapBooks = createMap(is_equal_string);
+    Map * mapWords = createMap(is_equal_string);
 
     char in = '\0';
 

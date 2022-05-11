@@ -1,12 +1,11 @@
 #include "csv.h"
 #include "util.h"
 #include "menu.h"
-#include "item.h"
 #include "map.h"
 
 
 
-
+/*
 const char *get_csv_field (char * tmp, int k) {
     int open_mark = 0;
     char* ret=(char*) malloc (100*sizeof(char));
@@ -51,10 +50,11 @@ const char *get_csv_field (char * tmp, int k) {
 
  
 void populateList(CSV *csv, Map* mapNames, Map* mapTypes, Map* mapBrands){
+    
     char line[2048];
 
 
-    /* leer linea a "read" hasta EOF */
+     leer linea a "read" hasta EOF 
     while(fgets(line, 2047, csv->fd) != NULL) {
         // Implementar    
         Item* aux = createItem();
@@ -81,6 +81,7 @@ void populateList(CSV *csv, Map* mapNames, Map* mapTypes, Map* mapBrands){
 }
 
 void CSVimport(char *name, Map* mapNames, Map* mapTypes, Map* mapBrands){
+    
     CSV *import = CSVnew();
 
     char *namecpy = _strdup(name);
@@ -98,9 +99,11 @@ void CSVimport(char *name, Map* mapNames, Map* mapTypes, Map* mapBrands){
 
     populateList(import, mapNames, mapTypes, mapBrands);
     fclose(import->fd);
+    
 }
 
 void CSVexport(Map *map, char *name){
+    
     remove(name);
     FILE* file = fopen(name, "w");
     if (!file) {
@@ -119,7 +122,9 @@ void CSVexport(Map *map, char *name){
     }
     
     fclose(file);
+    
 }
+
 
 void CSVcreate(CSV *csv){
     csv->fd = NULL;
@@ -167,3 +172,4 @@ void listaExportarArchivo(Map *map) {
     }
     fclose(file);
 }
+*/
