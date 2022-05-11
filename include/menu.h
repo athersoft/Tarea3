@@ -12,5 +12,4 @@ void mostrarLista(List *lista, int repetida);
 
 void mostrarMenuBuscar();
 
-void mostrarMenuPlaylists(Map* mapNames, Map* mapTypes, Map* mapBrands);
 #endif

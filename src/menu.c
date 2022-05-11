@@ -2,42 +2,34 @@
 #include "util.h"
 #include "string.h"
 #include "map.h"
-#include "item.h"
 
 void mostrarMenu(){
     clrscr();
     printf("%s", buf);
     strcpy(buf, "");
 
-    printf("\033[36m\nTienda\n"COLOR_RESET);
+    printf("\033[36m\nLibreria\n"COLOR_RESET);
 
-    printf("'i' : Importar archivo por nombre\n");
-    printf("'e' : Exportar archivo por nombre\n");
-
-    printf("'a' : Agregar producto\n");
-    printf("'b' : Mostrar menú de busqueda\n");
+    printf("'c' : Cargar documento\n");
+    printf("'m' : Mostrar documentos ordenados\n");
+    printf("'b' : Buscar libro\n");
+    printf("'b' : Mostrar palabras mas frecuentes\n");
     printf("'M' : Mostrar todos los productos\n");
-    printf("'A' : Agregar al carrito\n");
-    printf("'X' : Quitar al carrito\n");
-
-    printf("'p' : Concretar compra\n");
-    printf("'C' : Mostrar carritos\n");
-    printf("'c' : Mostrar carrito\n");
-
+    printf("'A' : Mostrar palabras mas relevantes\n");
+    printf("'X' : Mostar palabra en su contexto\n");
 
     printf("'q' : Salir\n");
 }
 
-void mostrarMenuBuscar(Map* mapNames, Map* mapTypes, Map* mapBrands){
+void mostrarMenuBuscar(){
     clrscr();
     printf("%s", buf);
     strcpy(buf, "");
 
 
     printf(COLOR_CYAN"Menu de busqueda\n"COLOR_RESET);
-    printf("'n': Por Nombre\n");
-    printf("'t': Por Tipo\n");
-    printf("'m': Por Marca\n");
+    printf("'n': Por Titulo\n");
+    printf("'t': Por Palabra\n");
     printf("'e': Salir\n");
     
                 
