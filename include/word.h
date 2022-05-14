@@ -1,20 +1,22 @@
 #ifndef WORD_H
 #define WORD_H
-include "list.h"
+#include "list.h"
 
-struct book{
-    list *mostRelevants;
-    list *mostFrecuents;
+typedef struct{
+    List *mostRelevants;
+    List *mostFrecuents;
     char bookName[50];
-}
+}Book;
 
-struct word{
+typedef struct{
     char name[50];
     int num;
-    list *ocurrencias;
-}
+    List *ocurrencias;
+}Word;
 
-struct ocurrencia{
+typedef struct{
     int pos;
     char bookName[50];
-}
+}Ocurrencia;
+
+#endif

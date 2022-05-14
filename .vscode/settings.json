@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "array": "c",
-        "string": "c"
+        "string": "c",
+        "import.h": "c",
+        "string.h": "c"
     }
 }

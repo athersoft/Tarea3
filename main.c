@@ -4,7 +4,7 @@
 /* manipulación de Strings */
 #include <string.h>
 
-#include "csv.h"
+#include "import.h"
 #include "menu.h"
 #include "util.h"
 #include "search.h"
@@ -29,7 +29,8 @@ int main(){
         getchar();
 
         switch(in) {
-            case ('i'): // Importar archivo por nombre
+            case ('c'): // Importar libro
+                import("10.txt", mapBooks, mapWords);
                 break;
 
             case ('e'): // Exportar archivo por nombre
@@ -48,10 +49,10 @@ int main(){
                 break;
             case('p'): // Concretar compra
                 break;
-            case('C'): // Mostrar carritos
-                break;
-            case('c'): // Mostrar carrito
-                break;
+            //case('C'): // Mostrar carritos
+            //    break;
+            //case('c'): // Mostrar carrito
+            //    break;
             default:
                 break;
           } 
