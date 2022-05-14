@@ -82,11 +82,30 @@ void populateList(CSV *csv, Map* mapNames, Map* mapTypes, Map* mapBrands){
 }
 
 */
-void import(char *name, Map* mapBooks, Map* mapWords){
+void wordsToMap(char *text, Map * mapWords){
+    const char delimitador[] = " ,.\n";
+    char *token = strtok(text, delimitador);
+
+    if(token != NULL){
+        while(token != NULL){
+            Word *word = createWord();
+            if(searchMap(mapWords,token) == NULL){
+                strcpy(word->name, token);
+                 word -> num = 1; 
+                insertMap(mapWords, token, word);
+            }
+            token = strtok(NULL, delimitador);
+        }
+    }
+    strcat(buf, "palabras guardadas");
+    
+}
+
+void import(char *name, Map * mapBooks, Map * mapWords){
     
     FILE *book;
     book = fopen(name, "r");
-    char *title;
+    //char *title;
     
     char *text;
     text = malloc(sizeof(char)*2);
@@ -100,20 +119,13 @@ void import(char *name, Map* mapBooks, Map* mapWords){
        }
     }
 
-    title = strtok(text, "/n");
-    strcat(buf, title);
-/*
-    char *token = strtok(text, " ");
-    while(token != NULL){
-        Word *word = searchMap(mapWords,token);
-        if(word == NULL){
-            strcpy(word->name, token);
-            word -> num = 1; 
-            insertMap(mapWords, token, word);
-        }
-    }
-*/
+    wordsToMap(text, mapWords);
+    //title = strtok(text, "/n");
+
+    //Book libro;
+    //strcpy(libro.bookName,title);
     
+    free(text);
     fclose(book);
     
 }

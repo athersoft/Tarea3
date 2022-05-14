@@ -9,7 +9,7 @@ typedef struct{
 }Book;
 
 typedef struct{
-    char name[50];
+    char name[100];
     int num;
     List *ocurrencias;
 }Word;
@@ -19,4 +19,5 @@ typedef struct{
     char bookName[50];
 }Ocurrencia;
 
+Word *createWord();
 #endif
