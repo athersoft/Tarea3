@@ -82,40 +82,74 @@ void populateList(CSV *csv, Map* mapNames, Map* mapTypes, Map* mapBrands){
 }
 
 */
-void wordsToMap(char *text, Map * mapWords){
+void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title){
 
     Word *word = createWord();
-    if(searchMap(mapWords,text) == NULL){
+
+    Pos *pos = createPos();
+    pos -> pos = bookPos;
+    strcpy(pos -> bookName, title);
+    
+    if(searchMap(mapWords, text) == NULL){
         strcpy(word->name, text);
+        listPushBack(word->ocurrencias, pos);
         word -> num = 1; 
         insertMap(mapWords, text, word);
+        //strcat(buf, text);
+        //strcat(buf, " guardada ");
+    }else{
+        word = searchMap(mapWords,text);
+        listPushBack(word->ocurrencias, pos);
+        word -> num++;
+        //strcat(buf, text);
+        //strcat(buf, " agregada ");
     }
-    //strcat(buf, text);
-    //strcat(buf, " guardada ");
     
+   // strcat(buf, text);
+    //strcat(buf, " guardada ");
 }
 
 void import(char *name, Map * mapBooks, Map * mapWords){
     printf("\nCargando libro, espere un momento...");
     FILE *book;
     book = fopen(name, "r");
-    //char *title;
-    
+
+    char title[50];
+    int titleSaved = 0;
+
     char *text;
     text = malloc(sizeof(char)*2);
+    long int bookPos = ftell(book);
 
     int pos = 0;
 
    while(1){
         text[pos] = fgetc(book);
-        if(text[pos] == ' ' || text[pos] == '\n' || text[pos] == ',' || text[pos] == '.'){
-            text[pos] = '\0';
-            wordsToMap(text, mapWords);
-            text =(char *) realloc(text, sizeof(char)*2);
-            pos = 0;
+
+        if(titleSaved == 1){
+            if(text[pos] == ' ' || text[pos] == '\n' || text[pos] == ',' || text[pos] == '.' || text[pos] == EOF){
+                text[pos] = '\0';
+                if(strlen(text) > 1){
+                    wordsToMap(text, mapWords, bookPos, title);
+                }
+                bookPos = ftell(book);
+                text =(char *) realloc(text, sizeof(char)*2);
+                pos = 0;
+            }else{
+                pos++;
+                text =(char *) realloc(text, sizeof(char)*(pos+1));
+            }
         }else{
-            pos++;
-            text =(char *) realloc(text, sizeof(char)*(pos+1));
+            title[pos] = text[pos];
+            if(text[pos] == '\n'){
+                title[pos] = '\0';
+                strcat(buf, title);
+                titleSaved = 1;
+                pos = 0;
+                bookPos = ftell(book);
+            }else{
+                pos++;
+            }
         }
 
         if(feof(book)){
@@ -123,7 +157,7 @@ void import(char *name, Map * mapBooks, Map * mapWords){
        }
         
     }
-    strcat(buf, "Palabras guardadas");
+    //strcat(buf, "Palabras guardadas");
     //wordsToMap(text, mapWords);
     //title = strtok(text, "/n");
 

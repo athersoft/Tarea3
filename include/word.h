@@ -15,9 +15,10 @@ typedef struct{
 }Word;
 
 typedef struct{
-    int pos;
+    long int pos;
     char bookName[50];
-}Ocurrencia;
+}Pos;
 
 Word *createWord();
+Pos *createPos();
 #endif

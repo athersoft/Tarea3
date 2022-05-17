@@ -30,7 +30,7 @@ int main(){
 
         switch(in) {
             case ('c'): // Importar libro
-                import("10.txt", mapBooks, mapWords);
+                import("1.txt", mapBooks, mapWords);
                 break;
 
             case ('e'): // Exportar archivo por nombre
