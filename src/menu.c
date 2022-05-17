@@ -13,10 +13,9 @@ void mostrarMenu(){
     printf("'c' : Cargar documento\n");
     printf("'m' : Mostrar documentos ordenados\n");
     printf("'b' : Buscar libro\n");
-    printf("'b' : Mostrar palabras mas frecuentes\n");
-    printf("'M' : Mostrar todos los productos\n");
+    printf("'B' : Mostrar palabras mas frecuentes\n");
     printf("'A' : Mostrar palabras mas relevantes\n");
-    printf("'X' : Mostar palabra en su contexto\n");
+    printf("'X' : Buscar palabra\n");
 
     printf("'q' : Salir\n");
 }

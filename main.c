@@ -33,26 +33,16 @@ int main(){
                 importBook(mapBooks, mapWords);
                 break;
 
-            case ('e'): // Exportar archivo por nombre
+            case ('m'): // Mostrar documentos ordenados
                 break;
-            case('a'): // Agregar producto
+            case('b'): // Buscar libro
                 break;
-            case('x'): // Quitar producto
+            case('B'): // Mostrar palabras mas frecuentes
                 break;
-            case('b'): // Buscar producto
+            case('A'): // Mostrar palabras mas relevantes
                 break;
-            case('M'): // Mostrar todos los productos
+            case('X'): // Buscar palabra
                 break;
-            case('A'): // Añadir al carrito
-                break;
-            case('X'): // Quitar del carrito
-                break;
-            case('p'): // Concretar compra
-                break;
-            //case('C'): // Mostrar carritos
-            //    break;
-            //case('c'): // Mostrar carrito
-            //    break;
             default:
                 break;
           } 
