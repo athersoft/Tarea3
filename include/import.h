@@ -8,18 +8,10 @@
 #include "map.h"
 
 
-typedef struct {
-    FILE *fd;
-    List *list;
-}CSV;
-
-
 void import(char *fileName, Map* mapBooks, Map* mapWords);
 
 // Menú interactivo
 void importBook(Map* mapBooks, Map* mapWords);
 
-void listaExportarArchivo(Map* mapNames);
-
-CSV *CSVnew();
+void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title);
 #endif
