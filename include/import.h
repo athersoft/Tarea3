@@ -17,7 +17,7 @@ typedef struct {
 void import(char *fileName, Map* mapBooks, Map* mapWords);
 
 // Menú interactivo
-void listaImportarArchivo(Map* mapNames, Map* mapTypes, Map* mapBrands);
+void importBook(Map* mapBooks, Map* mapWords);
 
 void listaExportarArchivo(Map* mapNames);
 

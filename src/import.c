@@ -105,26 +105,26 @@ void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title){
         //strcat(buf, " agregada ");
     }
     
-   // strcat(buf, text);
-    //strcat(buf, " guardada ");
+    //strcat(buf, text);//
+    //strcat(buf, " guardada ");//
 }
 
 void import(char *name, Map * mapBooks, Map * mapWords){
     printf("\nCargando libro, espere un momento...");
-    FILE *book;
-    book = fopen(name, "r");
+    FILE *file;
+    file = fopen(name, "r");
 
     char title[50];
     int titleSaved = 0;
 
     char *text;
     text = malloc(sizeof(char)*2);
-    long int bookPos = ftell(book);
+    long int bookPos = ftell(file);
 
     int pos = 0;
 
    while(1){
-        text[pos] = fgetc(book);
+        text[pos] = fgetc(file);
 
         if(titleSaved == 1){
             if(text[pos] == ' ' || text[pos] == '\n' || text[pos] == ',' || text[pos] == '.' || text[pos] == EOF){
@@ -132,7 +132,7 @@ void import(char *name, Map * mapBooks, Map * mapWords){
                 if(strlen(text) > 1){
                     wordsToMap(text, mapWords, bookPos, title);
                 }
-                bookPos = ftell(book);
+                bookPos = ftell(file);
                 text =(char *) realloc(text, sizeof(char)*2);
                 pos = 0;
             }else{
@@ -143,29 +143,30 @@ void import(char *name, Map * mapBooks, Map * mapWords){
             title[pos] = text[pos];
             if(text[pos] == '\n'){
                 title[pos] = '\0';
-                strcat(buf, title);
+                //strcat(buf, "Titulo: ");//
+                //strcat(buf, title); //
+                //strcat(buf, "\n");//
                 titleSaved = 1;
                 pos = 0;
-                bookPos = ftell(book);
+                bookPos = ftell(file);
             }else{
                 pos++;
             }
         }
 
-        if(feof(book)){
+        if(feof(file)){
            break;
        }
         
     }
-    //strcat(buf, "Palabras guardadas");
-    //wordsToMap(text, mapWords);
-    //title = strtok(text, "/n");
-
-    //Book libro;
-    //strcpy(libro.bookName,title);
     
+    strcat(buf, "Libro Guardado");
+    Book *book = createBook();
+    strcpy(book -> bookName, title);
+    strcpy(book -> fileName, name);
+
     free(text);
-    fclose(book);
+    fclose(file);
     
 }
 /*
@@ -185,14 +186,13 @@ CSV *CSVnew() {
     CSVcreate(csv);
     return csv;
 }
-
-void listaImportarArchivo(Map* mapNames, Map* mapTypes, Map* mapBrands) {
+*/
+void importBook(Map* mapBooks, Map* mapWords) {
     char archivo[30];
-    printf("Ingresa el nombre del archivo a importar: ");
+    printf("Ingresa el nombre del libro a importar: ");
     fflush(stdin);
     scanf("%[^\n]*s", archivo);
     getchar();
-    CSVimport(archivo, mapNames, mapTypes, mapBrands);
+    import(archivo, mapBooks, mapWords);
 }
 
-*/

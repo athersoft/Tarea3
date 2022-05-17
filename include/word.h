@@ -6,6 +6,7 @@ typedef struct{
     List *mostRelevants;
     List *mostFrecuents;
     char bookName[50];
+    char fileName[20];
 }Book;
 
 typedef struct{
@@ -21,4 +22,6 @@ typedef struct{
 
 Word *createWord();
 Pos *createPos();
+Book *createBook();
+
 #endif
