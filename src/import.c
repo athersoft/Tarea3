@@ -9,23 +9,24 @@
 
 void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title){
 
-    
+    char *texto = (char *) malloc(sizeof(char)*50);
+    strcpy(texto, text);
 
     Pos *pos = createPos();
     pos -> pos = bookPos;
     strcpy(pos -> bookName, title);
     
-    Word *word = searchMap(mapWords, text); 
+    Word *word = searchMap(mapWords, texto); 
 
     if(!word){
         word = createWord();
-        strcpy(word->name, text);
+        strcpy(word->name, texto);
         listPushBack(word->ocurrencias, pos);
         word -> num = 1; 
         //insertMap(mapWords, text, word);
-        _pushFront(mapWords, text, word);
+        _pushFront(mapWords, texto, word);
 
-        strcat(buf, text);
+        strcat(buf, texto);
         strcat(buf, " guardada ");
     }else{
         //word = searchMap(mapWords,text);

@@ -34,7 +34,7 @@ Book *createBook(){
 
 void searchWord(Map* mapWords){
     Word* aux = createWord();
-    char palabra[30];
+    char *palabra = (char *) malloc(sizeof(char)*50);
     printf("Ingresa la palabra que quiere buscar: ");
     fflush(stdin);
     scanf("%[^\n]*s", palabra);
@@ -45,12 +45,16 @@ void searchWord(Map* mapWords){
     if (searchMap(mapWords, palabra) != NULL){
         aux = searchMap(mapWords, palabra);
         listFirst(aux->ocurrencias);
-        
+        strcat(buf, "Libros en los que aparece: ");
+        strcat(buf, "\n");
         for (Pos* i = listFirst(aux->ocurrencias); i != NULL; i = listNext(aux->ocurrencias) ){
-            strcat(buf, "Titulo: ");
-            strcat(buf, i->bookName);
+            //if(strcmp(last_book, i -> bookName) != 0){
+                strcat(buf, "Titulo: ");
+                strcat(buf, i->bookName);
+                strcat(buf, "\n");
+                //strcpy(last_book[50], i->bookName);
+            //}
         }
-        //if (strcmp(last_book, aux->ocurrencias->current->data) );
     }else{
         strcat(buf, "No se encontro la palabra\n");
     }
