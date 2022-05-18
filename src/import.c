@@ -28,11 +28,12 @@ void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title){
         //strcat(buf, " agregada ");
     }
     
-    //strcat(buf, text);//
-    //strcat(buf, " guardada ");//
+    strcat(buf, text);//
+    strcat(buf, " guardada ");//
 }
 
 void import(char *name, Map * mapBooks, Map * mapWords){
+    clrscr();
     printf("\nCargando libro, espere un momento...");
     FILE *file;
     file = fopen(name, "r");
@@ -50,7 +51,7 @@ void import(char *name, Map * mapBooks, Map * mapWords){
         text[pos] = fgetc(file);
 
         if(titleSaved == 1){
-            if(text[pos] == ' ' || text[pos] == '\n' || text[pos] == ',' || text[pos] == '.' || text[pos] == EOF){
+            if(text[pos] == ' ' || text[pos] == '\n' || text[pos] == ',' || text[pos] == '.'){
                 text[pos] = '\0';
                 if(strlen(text) > 1){
                     wordsToMap(text, mapWords, bookPos, title);
@@ -78,6 +79,10 @@ void import(char *name, Map * mapBooks, Map * mapWords){
         }
 
         if(feof(file)){
+            text[pos] = '\0';
+            if(strlen(text) > 1){
+                wordsToMap(text, mapWords, bookPos, title);
+            }
            break;
        }
         
