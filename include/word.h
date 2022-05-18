@@ -1,7 +1,7 @@
 #ifndef WORD_H
 #define WORD_H
 #include "list.h"
-
+#include "map.h"
 typedef struct{
     List *mostRelevants;
     List *mostFrecuents;
@@ -24,4 +24,5 @@ Word *createWord();
 Pos *createPos();
 Book *createBook();
 
+void searchWord(Map* mapWords);
 #endif

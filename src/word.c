@@ -1,5 +1,8 @@
+#include "import.h"
+#include "util.h"
+#include "menu.h"
+#include "map.h"
 #include "word.h"
-#include "list.h"
 #include <string.h>
 
 Word *createWord(){
@@ -27,4 +30,30 @@ Book *createBook(){
     strcpy(book -> fileName, "");
 
     return book;
+}
+
+void searchWord(Map* mapWords){
+    Word* aux = createWord();
+    char palabra[30];
+    printf("Ingresa la palabra que quiere buscar: ");
+    fflush(stdin);
+    scanf("%[^\n]*s", palabra);
+    getchar();
+
+    //char last_book[50] = NULL;
+
+    if (searchMap(mapWords, palabra) != NULL){
+        aux = searchMap(mapWords, palabra);
+        listFirst(aux->ocurrencias);
+        
+        for (Pos* i = listFirst(aux->ocurrencias); i != NULL; i = listNext(aux->ocurrencias) ){
+            strcat(buf, "Titulo: ");
+            strcat(buf, i->bookName);
+        }
+        //if (strcmp(last_book, aux->ocurrencias->current->data) );
+    }else{
+        strcat(buf, "No se encontro la palabra\n");
+    }
+
+
 }

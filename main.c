@@ -10,6 +10,7 @@
 #include "search.h"
 #include "list.h" 
 #include "map.h"
+#include "word.h"
 
 int lower_than_string(void* key1, void* key2);
 int is_equal_string(void * key1, void * key2);
@@ -42,6 +43,7 @@ int main(){
             case('A'): // Mostrar palabras mas relevantes
                 break;
             case('X'): // Buscar palabra
+                searchWord(mapWords);
                 break;
             default:
                 break;
