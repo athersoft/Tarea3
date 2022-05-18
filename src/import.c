@@ -41,8 +41,9 @@ void import(char *name, Map * mapBooks, Map * mapWords){
     char title[50];
     int titleSaved = 0;
 
-    char *text;
-    text = malloc(sizeof(char)*2);
+    char text[50];
+    //char *text;
+    //text = (char*) malloc(sizeof(char)*2);
     long int bookPos = ftell(file);
 
     int pos = 0;
@@ -57,11 +58,14 @@ void import(char *name, Map * mapBooks, Map * mapWords){
                     wordsToMap(text, mapWords, bookPos, title);
                 }
                 bookPos = ftell(file);
-                text =(char *) realloc(text, sizeof(char)*2);
+                //free(text);
+                //text = (char *) realloc(text, sizeof(char)*2);
+                memset(text, 0, 50);
+                
                 pos = 0;
             }else{
                 pos++;
-                text =(char *) realloc(text, sizeof(char)*(pos+1));
+                //text =(char *) realloc(text, sizeof(char)*(pos+1));
             }
         }else{
             title[pos] = text[pos];
@@ -93,7 +97,7 @@ void import(char *name, Map * mapBooks, Map * mapWords){
     strcpy(book -> bookName, title);
     strcpy(book -> fileName, name);
 
-    free(text);
+    //free(text);
     fclose(file);
     
 }
