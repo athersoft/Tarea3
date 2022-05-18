@@ -34,7 +34,8 @@ int main(){
                 importBook(mapBooks, mapWords);
                 break;
 
-            case ('m'): // Mostrar documentos ordenados
+            case ('m'): // Mostrar documentos 
+                showWords(mapWords);
                 break;
             case('b'): // Buscar libro
                 break;

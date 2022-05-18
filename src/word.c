@@ -57,3 +57,13 @@ void searchWord(Map* mapWords){
 
 
 }
+
+void showWords(Map * mapWords){
+    for(Word *word = firstMap(mapWords);
+            word != NULL; 
+            word = nextMap(mapWords)) 
+    {
+        strcat(buf, word ->name);
+        strcat(buf, "\n");
+    }
+}

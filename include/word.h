@@ -25,4 +25,5 @@ Pos *createPos();
 Book *createBook();
 
 void searchWord(Map* mapWords);
+void showWords(Map*mapWords);
 #endif

@@ -172,14 +172,14 @@ void * _popBack(Map * list) {
 
 void* searchMap(Map * list, void * key) {
     assert(list != NULL); // list no puede ser NULL.
-
+    
     Node* aux= list->head;
     //the minimum element
     while (aux && list->is_equal(key,aux->key)==0) aux=aux->next;
 
     list->current=aux;
+    
     if (list->head == NULL || list->current == NULL) return NULL;
-
     return (void *) aux->data;
 }
 

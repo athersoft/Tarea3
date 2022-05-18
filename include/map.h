@@ -48,4 +48,6 @@ void * nextMap(Map * map);
 
 void setSortFunction(Map* map, int (*lower_than)(void* key1, void* key2));
 
+void _pushFront(Map * list, void * key, void * value);
+
 #endif /* MAP_h */
