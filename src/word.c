@@ -4,6 +4,7 @@
 #include "map.h"
 #include "word.h"
 #include <string.h>
+#include <ctype.h> //Para funcion toLower
 
 Word *createWord(){
     Word *word = (Word*) malloc(sizeof(Word));
@@ -28,8 +29,54 @@ Book *createBook(){
     book -> mostFrecuents = listCreate();
     strcpy(book -> bookName, "");
     strcpy(book -> fileName, "");
-
+    book -> totalChar = 0;
     return book;
+}
+//Lleva los caracteres de una cadena a minuscula
+char* lower(char* word){
+    int i = 0;
+    while (word[i] != '\0'){
+        word[i] = tolower(word[i]);
+        i++;
+    }
+    return word;
+}
+
+void initBook(Book * book){
+    //El archivo se abre y queda referenciado en book
+    book -> arch = fopen("67937.txt", "r");
+    if(book->arch == NULL){
+        printf("Error al abrir archivo\n");
+        return;
+    }
+    char x[1024];
+    //Se salta las primeras palabras hasta llegar al inicio del titulo
+    for(int i = 0; i < 5; i++){
+        fscanf(book -> arch," %1023s", x);
+    }
+    //Lee hasta llegar al by que significa que se acabo el titulo del libro
+    while (fscanf(book->arch, " %1023s", x) == 1){
+        if(strcmp(x,"by") == 0){
+            break;
+        }else{
+            //Agrega el las palabras(del titulo) al book
+            strcat(book -> bookName,x);
+        }
+    }
+    //Busca la posicion de la ,(siempre al final, no puede hacerlo con strlen) y la reemplaza con un /0
+    char *coma = strchr(book->bookName, ',');
+    *coma = '\0';
+    //Vuelve al inicio del archivo
+    rewind(book->arch);
+    //Lee palabra por palabra
+    while((fscanf(book->arch, " %1023s", x) == 1)){
+        book -> totalChar += strlen(x);
+        lower(x);
+        Word *new = createWord();
+        strcpy(new -> name, x);
+        listPushBack(book -> mostFrecuents,new);
+    }
+    return;
 }
 
 void searchWord(Map* mapWords){

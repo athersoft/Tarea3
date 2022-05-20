@@ -20,6 +20,7 @@ int is_equal_string(void * key1, void * key2);
 int main(){
     Map * mapBooks = createMap(is_equal_string);
     Map * mapWords = createMap(is_equal_string);
+    Book * test = createBook();
 
     char in = '\0';
 
@@ -33,11 +34,12 @@ int main(){
             case ('c'): // Importar libro
                 importBook(mapBooks, mapWords);
                 break;
-
             case ('m'): // Mostrar documentos 
                 showWords(mapWords);
                 break;
             case('b'): // Buscar libro
+                initBook(test);
+                printf("%s",test->bookName);
                 break;
             case('B'): // Mostrar palabras mas frecuentes
                 break;

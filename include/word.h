@@ -2,11 +2,15 @@
 #define WORD_H
 #include "list.h"
 #include "map.h"
+#include <stdio.h>
+
 typedef struct{
     List *mostRelevants;
     List *mostFrecuents;
     char bookName[50];
     char fileName[20];
+    long totalChar; //Cuenta el total de caracteres del libro
+    FILE* arch;     //Archivo
 }Book;
 
 typedef struct{
@@ -23,7 +27,7 @@ typedef struct{
 Word *createWord();
 Pos *createPos();
 Book *createBook();
-
+void initBook(Book * book);
 void searchWord(Map* mapWords);
 void showWords(Map*mapWords);
 #endif
