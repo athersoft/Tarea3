@@ -40,6 +40,7 @@ int main(){
             case('b'): // Buscar libro
                 initBook(test);
                 printf("%s",test->bookName);
+                scanf("%c",&in);
                 break;
             case('B'): // Mostrar palabras mas frecuentes
                 break;

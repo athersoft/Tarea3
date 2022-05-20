@@ -30,4 +30,8 @@ Book *createBook();
 void initBook(Book * book);
 void searchWord(Map* mapWords);
 void showWords(Map*mapWords);
+
+int quitar_caracteres(char* string, char* c);
+int hayQueEliminar(char c, char* string_chars);
+
 #endif

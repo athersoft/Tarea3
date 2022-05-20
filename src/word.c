@@ -60,12 +60,16 @@ void initBook(Book * book){
             break;
         }else{
             //Agrega el las palabras(del titulo) al book
-            strcat(book -> bookName,x);
+            if(quitar_caracteres(x, ",")){
+                strcat(book -> bookName,x);
+            }else{
+                strcat(book -> bookName,x);
+                strcat(book -> bookName," ");
+            }
+
         }
     }
     //Busca la posicion de la ,(siempre al final, no puede hacerlo con strlen) y la reemplaza con un /0
-    char *coma = strchr(book->bookName, ',');
-    *coma = '\0';
     //Vuelve al inicio del archivo
     rewind(book->arch);
     //Lee palabra por palabra
@@ -126,11 +130,13 @@ int hayQueEliminar(char c, char* string_chars){
     return 0;
 }
 
-char* quitar_caracteres(char* string, char* c){
+int quitar_caracteres(char* string, char* c){
     int i;
     int j;
+    int elimino = 0;
     for(i=0 ; i < strlen(string) ; i++){
         if(hayQueEliminar(string[i], c)){
+            elimino  = 1;
             for(j=i ; j<strlen(string)-1 ;j++){
                 string[j] = string[j+1];
         }
@@ -139,5 +145,5 @@ char* quitar_caracteres(char* string, char* c){
     }
 }
 
-    return string;
+    return elimino;
 }
