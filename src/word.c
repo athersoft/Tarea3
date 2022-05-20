@@ -69,7 +69,6 @@ void initBook(Book * book){
 
         }
     }
-    //Busca la posicion de la ,(siempre al final, no puede hacerlo con strlen) y la reemplaza con un /0
     //Vuelve al inicio del archivo
     rewind(book->arch);
     //Lee palabra por palabra
