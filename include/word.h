@@ -5,11 +5,11 @@
 #include <stdio.h>
 
 typedef struct{
-    Map * words;
+    Map * words;    //Cambie por un mapa de palabras
     char bookName[50];
     char fileName[20];
     long totalChar; //Cuenta el total de caracteres del libro
-    long totalWords;
+    long totalWords;//Cuenta el total de palabras en libro
     FILE* arch;     //Archivo
 }Book;
 
@@ -27,12 +27,13 @@ typedef struct{
 Word *createWord();
 Pos *createPos();
 Book *createBook();
-void initBook(Book * book,char *id);
+void initBook(Book * book,char *id);    //Agregada
 void searchWord(Map* mapWords);
 void showWords(Map*mapWords);
-void readBook(Book * book);
+void readBook(Book * book);             //Agregada
+void bookToMap(Map *mapBook, Book *book);//Agregada
 
-
-int is_equal_string(void * key1, void * key2);
+//Funciones para comparar strings
+int is_equal_string(void * key1, void * key2);  
 int lower_than_string(void * key1, void * key2);
 #endif

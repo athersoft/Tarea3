@@ -17,9 +17,10 @@ List * genresToList(const char * genre);
 void clrscr();
 
 char *_strdup(const char *str);
-
+//Agregue las funciones que pasa el profe para quitar caracteres
 int quitar_caracteres(char* string, char* c);
 int hayQueEliminar(char c, char* string_chars);
+//Agregue la funcion que hace un string completo a minuscula
 char* lower(char* word);
 
 #endif

@@ -34,6 +34,7 @@ struct Map {
 
 };
 
+//Agregar lower_than desde que se crea el mapa
 Map * createMap(int (*is_equal)(void* key1, void* key2),int (*lower_than)(void* key1, void* key2));
 
 void insertMap(Map * map, void * key, void * value);

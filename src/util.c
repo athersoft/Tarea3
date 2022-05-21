@@ -38,6 +38,9 @@ char * _strdup(const char * str) {
     return aux;
 }
 
+
+//Agregue las funciones que estan abajo
+
 char* lower(char* word){
     int i = 0;
     while (word[i] != '\0'){

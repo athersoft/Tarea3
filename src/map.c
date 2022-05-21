@@ -20,7 +20,7 @@ Node* _createNode(void * key, void * data) {
 }
 
 
-
+//Agregar funcion lower_than desde el inicio
 Map * createMap(int (*is_equal)(void* key1, void* key2),int (*lower_than)(void* key1, void* key2)) {
     Map * new = (Map *)malloc(sizeof(Map));
     assert(new != NULL); // No hay memoria para reservar la Mapa.

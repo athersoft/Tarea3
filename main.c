@@ -20,6 +20,7 @@ int main(){
     Map * mapBooks = createMap(is_equal_string,lower_than_string);
     Map * mapWords = createMap(is_equal_string,lower_than_string);
     Book * test = createBook();
+    Book * test2 = createBook();
 
     char in = '\0';
 
@@ -37,8 +38,12 @@ int main(){
                 showWords(mapWords);
                 break;
             case('b'): // Buscar libro
-                initBook(test,"67937");
+                initBook(test,"hola");
                 readBook(test);
+                bookToMap(mapBooks,test);
+                initBook(test2,"67937");
+                readBook(test2);
+                bookToMap(mapBooks,test2);
                 scanf("%c",&in);
                 break;
             case('B'): // Mostrar palabras mas frecuentes

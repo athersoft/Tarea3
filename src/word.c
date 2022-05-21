@@ -5,7 +5,7 @@
 #include "word.h"
 #include <string.h>
 
-
+//Comparar Strings
 int is_equal_string(void * key1, void * key2) {
     if(strcmp((char*)key1, (char*)key2)==0) return 1;
     return 0;
@@ -33,6 +33,7 @@ Pos *createPos(){
     return pos;
 }
 
+//Agregue los valores iniciales para el book
 Book *createBook(){
     Book * book = (Book*) malloc(sizeof(Book));
     book->words = createMap(is_equal_string,lower_than_string);
@@ -42,7 +43,7 @@ Book *createBook(){
     book -> totalWords = 0;
     return book;
 }
-//Lleva los caracteres de una cadena a minuscula
+
 
 
 void initBook(Book * book,char *id){
@@ -50,8 +51,8 @@ void initBook(Book * book,char *id){
     char open[20];
     strcpy(open, id);
     strcat(open, ".txt");
-    strcpy(book -> fileName,id);
-    book -> arch = fopen(open, "r");
+    strcpy(book -> fileName,id);    //Le pone el filename al libro
+    book -> arch = fopen(open, "r");//Abre el archivo
     if(book->arch == NULL){
         printf("Error al abrir archivo\n");
         return;
@@ -79,34 +80,52 @@ void initBook(Book * book,char *id){
 }
 
 void readBook(Book * book){
-    rewind(book->arch);
-    char x[1024];
-    while((fscanf(book->arch, " %1023s", x) == 1)){
-        book -> totalChar += strlen(x);
-        (book -> totalWords)++;
-        quitar_caracteres(x,".,;:-_()/?¡![]{}+*=%%$&‘’“");
-        lower(x);
-        Word *aux = searchMap(book -> words,x);
-        if(aux == NULL){
+    rewind(book->arch);//Vuelve a abrir al inicio del archivo
+    char * x = malloc(1024 * sizeof (char) );
+    while((fscanf(book->arch, " %1023s", x) == 1)){ //recorre cada palabra del archivo
+        //printf("%s largo = %lo\n",x,strlen(x));
+        book -> totalChar += strlen(x);//Suma los caracteres de la palabra
+        quitar_caracteres(x,".,;:-_()/?¡![]{}+*=%%$&‘’“");//elimina esos caracteres de la palabra
+        lower(x);//Lo hace minuscula
+        Word *aux = searchMap(book -> words,x);//ve si la palabra existe dentro del mapa libro (que almacena todas las palabras del libro)
+        if(aux == NULL){//Si no existe la crea y agrega al mapa
             Word * new = createWord();
             strcpy(new -> name, x);
             insertMap(book -> words,new ->name,new);
-        }else{
+        }else{//Si existe le suma 1 a la cantidad de veces que se repite
             (aux -> num)++;
         }          
     }
 
-    for(Word *aux = firstMap(book -> words);
+    /*for(Word *aux = firstMap(book -> words);
             aux != NULL; 
             aux = nextMap(book -> words)) 
     {
+        printf("la cuenta va en %lo\n",book -> totalWords);
+        (book -> totalWords)+= aux -> num;
         printf("%s: ",aux ->name);
         printf("%lo\n",aux ->num);
     }
+    printf("%lo",book ->totalChar);*/
     return;
 }
 
-
+void bookToMap(Map *mapBook, Book *book){
+//Agrega un libro al mapa
+    Book *aux = searchMap(mapBook,book ->fileName);
+    if(aux == NULL){
+        insertMap(mapBook,book ->fileName,book);
+    }else{
+        printf("Libro ya existe");
+    }
+    /*for(Book *aux = firstMap(mapBook);
+            aux != NULL; 
+            aux = nextMap(mapBook)) 
+    {
+        printf("%s\n",aux -> fileName);
+    }*/
+    return;
+}
 
 
 
@@ -150,3 +169,10 @@ void showWords(Map * mapWords){
     }
 }
 
+/*Problemas
+
+
+totalChar cuenta caracteres demas(hay palabras que cuenta caracteres de mas, por ejemplo en hola.txt a Gutenberg le cuenta 11 caracteres)
+totalWords cuenta palabras de mas(Es raro porque num en cada palabra si corresponde con la cantidad de veces que sale la palabra)
+Falta quitar algunos caracteres en la funcion (no se cuales son pero quedan palabras con cosas  raras)
+*/
