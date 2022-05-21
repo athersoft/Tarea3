@@ -37,7 +37,7 @@ int main(){
                 showWords(mapWords);
                 break;
             case('b'): // Buscar libro
-                initBook(test,"hola");
+                initBook(test,"67937");
                 readBook(test);
                 scanf("%c",&in);
                 break;

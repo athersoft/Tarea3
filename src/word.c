@@ -84,7 +84,7 @@ void readBook(Book * book){
     while((fscanf(book->arch, " %1023s", x) == 1)){
         book -> totalChar += strlen(x);
         (book -> totalWords)++;
-        quitar_caracteres(x,".,;:-_()/?¡![]{}+*=%%$&");
+        quitar_caracteres(x,".,;:-_()/?¡![]{}+*=%%$&‘’“");
         lower(x);
         Word *aux = searchMap(book -> words,x);
         if(aux == NULL){
