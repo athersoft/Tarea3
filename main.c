@@ -12,14 +12,13 @@
 #include "map.h"
 #include "word.h"
 
-int lower_than_string(void* key1, void* key2);
-int is_equal_string(void * key1, void * key2);
+
 
 
 /* main function */
 int main(){
-    Map * mapBooks = createMap(is_equal_string);
-    Map * mapWords = createMap(is_equal_string);
+    Map * mapBooks = createMap(is_equal_string,lower_than_string);
+    Map * mapWords = createMap(is_equal_string,lower_than_string);
     Book * test = createBook();
 
     char in = '\0';
@@ -38,8 +37,8 @@ int main(){
                 showWords(mapWords);
                 break;
             case('b'): // Buscar libro
-                initBook(test);
-                printf("%s",test->bookName);
+                initBook(test,"hola");
+                readBook(test);
                 scanf("%c",&in);
                 break;
             case('B'): // Mostrar palabras mas frecuentes
@@ -59,14 +58,3 @@ int main(){
 }
 
 
-int is_equal_string(void * key1, void * key2) {
-    if(strcmp((char*)key1, (char*)key2)==0) return 1;
-    return 0;
-}
-
-int lower_than_string(void* key1, void* key2){
-    char* k1=(char*) key1;
-    char* k2=(char*) key2;
-    if(strcmp(k1,k2)<0) return 1;
-    return 0;
-}

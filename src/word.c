@@ -4,12 +4,22 @@
 #include "map.h"
 #include "word.h"
 #include <string.h>
-#include <ctype.h> //Para funcion toLower
+
+
+int is_equal_string(void * key1, void * key2) {
+    if(strcmp((char*)key1, (char*)key2)==0) return 1;
+    return 0;
+}
+
+int lower_than_string(void * key1, void * key2) {
+    if(strcmp((char*)key1, (char*)key2) < 0) return 1;
+    return 0;
+}
 
 Word *createWord(){
     Word *word = (Word*) malloc(sizeof(Word));
     strcpy(word -> name, "");
-    word -> num = 0;
+    word -> num = 1;
     word -> ocurrencias = listCreate();
 
     return word;
@@ -25,26 +35,23 @@ Pos *createPos(){
 
 Book *createBook(){
     Book * book = (Book*) malloc(sizeof(Book));
-    book -> mostRelevants = listCreate();
-    book -> mostFrecuents = listCreate();
+    book->words = createMap(is_equal_string,lower_than_string);
     strcpy(book -> bookName, "");
     strcpy(book -> fileName, "");
     book -> totalChar = 0;
+    book -> totalWords = 0;
     return book;
 }
 //Lleva los caracteres de una cadena a minuscula
-char* lower(char* word){
-    int i = 0;
-    while (word[i] != '\0'){
-        word[i] = tolower(word[i]);
-        i++;
-    }
-    return word;
-}
 
-void initBook(Book * book){
+
+void initBook(Book * book,char *id){
     //El archivo se abre y queda referenciado en book
-    book -> arch = fopen("67937.txt", "r");
+    char open[20];
+    strcpy(open, id);
+    strcat(open, ".txt");
+    strcpy(book -> fileName,id);
+    book -> arch = fopen(open, "r");
     if(book->arch == NULL){
         printf("Error al abrir archivo\n");
         return;
@@ -66,21 +73,42 @@ void initBook(Book * book){
                 strcat(book -> bookName,x);
                 strcat(book -> bookName," ");
             }
-
         }
     }
-    //Vuelve al inicio del archivo
+
+}
+
+void readBook(Book * book){
     rewind(book->arch);
-    //Lee palabra por palabra
+    char x[1024];
     while((fscanf(book->arch, " %1023s", x) == 1)){
         book -> totalChar += strlen(x);
+        (book -> totalWords)++;
+        quitar_caracteres(x,".,;:-_()/?¡![]{}+*=%%$&");
         lower(x);
-        Word *new = createWord();
-        strcpy(new -> name, x);
-        listPushBack(book -> mostFrecuents,new);
+        Word *aux = searchMap(book -> words,x);
+        if(aux == NULL){
+            Word * new = createWord();
+            strcpy(new -> name, x);
+            insertMap(book -> words,new ->name,new);
+        }else{
+            (aux -> num)++;
+        }          
+    }
+
+    for(Word *aux = firstMap(book -> words);
+            aux != NULL; 
+            aux = nextMap(book -> words)) 
+    {
+        printf("%s: ",aux ->name);
+        printf("%lo\n",aux ->num);
     }
     return;
 }
+
+
+
+
 
 void searchWord(Map* mapWords){
     Word* aux = createWord();
@@ -122,27 +150,3 @@ void showWords(Map * mapWords){
     }
 }
 
-int hayQueEliminar(char c, char* string_chars){
-    for(int i=0 ; i<strlen(string_chars) ; i++){
-        if(string_chars[i]==c) return 1;
-    }
-    return 0;
-}
-
-int quitar_caracteres(char* string, char* c){
-    int i;
-    int j;
-    int elimino = 0;
-    for(i=0 ; i < strlen(string) ; i++){
-        if(hayQueEliminar(string[i], c)){
-            elimino  = 1;
-            for(j=i ; j<strlen(string)-1 ;j++){
-                string[j] = string[j+1];
-        }
-        string[j]='\0';
-        i--;
-    }
-}
-
-    return elimino;
-}

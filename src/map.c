@@ -19,22 +19,14 @@ Node* _createNode(void * key, void * data) {
     return new;
 }
 
-int lower_than(void* key1, void* key2){
-    char* k1=(char*) key1;
-    char* k2=(char*) key2;
-    if(strcmp(k1,k2)<0) return 1;
-    return 0;
-}
 
 
-
-
-Map * createMap(int (*is_equal)(void* key1, void* key2)) {
+Map * createMap(int (*is_equal)(void* key1, void* key2),int (*lower_than)(void* key1, void* key2)) {
     Map * new = (Map *)malloc(sizeof(Map));
     assert(new != NULL); // No hay memoria para reservar la Mapa.
     new->head = new->tail = new->current = NULL;
     new->is_equal = is_equal;
-    new->lower_than = NULL;
+    new->lower_than = lower_than;
     return new;
 }
 

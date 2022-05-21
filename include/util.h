@@ -18,4 +18,8 @@ void clrscr();
 
 char *_strdup(const char *str);
 
+int quitar_caracteres(char* string, char* c);
+int hayQueEliminar(char c, char* string_chars);
+char* lower(char* word);
+
 #endif

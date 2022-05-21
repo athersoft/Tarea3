@@ -5,11 +5,11 @@
 #include <stdio.h>
 
 typedef struct{
-    List *mostRelevants;
-    List *mostFrecuents;
+    Map * words;
     char bookName[50];
     char fileName[20];
     long totalChar; //Cuenta el total de caracteres del libro
+    long totalWords;
     FILE* arch;     //Archivo
 }Book;
 
@@ -27,11 +27,12 @@ typedef struct{
 Word *createWord();
 Pos *createPos();
 Book *createBook();
-void initBook(Book * book);
+void initBook(Book * book,char *id);
 void searchWord(Map* mapWords);
 void showWords(Map*mapWords);
+void readBook(Book * book);
 
-int quitar_caracteres(char* string, char* c);
-int hayQueEliminar(char c, char* string_chars);
 
+int is_equal_string(void * key1, void * key2);
+int lower_than_string(void * key1, void * key2);
 #endif
