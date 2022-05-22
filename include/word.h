@@ -37,6 +37,7 @@ void bookToMap(Map *mapBook, Book *book);//Agregada
 //Funciones para comparar strings
 int is_equal_string(void * key1, void * key2);  
 int lower_than_string(void * key1, void * key2);
+void context(Book *book, char * word);
 
 void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks);
 void searchContext(Map *mapWords, Map *mapBooks);

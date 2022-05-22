@@ -82,6 +82,19 @@ void initBook(Book * book,char *id){
 
 }
 
+void context(Book *book, char * word){
+    rewind(book -> arch);
+    char * x = malloc(1024 * sizeof(char));
+    while (fscanf(book -> arch, "%[^\n] ", x) != EOF) {
+        lower(x);
+        char * search = strstr(x,word);
+        if(search != NULL){
+            printf("> %s\n", x);
+        }
+        
+    }
+}
+
 void readBook(Book * book){
     rewind(book->arch);//Vuelve a abrir al inicio del archivo
     char * x = malloc(1024 * sizeof (char) );
@@ -162,7 +175,7 @@ void searchWord(Map* mapWords){
 
 }
 
-double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBooks){
+/*double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBooks){
 
     Word* word = createWord();
     Book* book = createBook();
@@ -203,6 +216,7 @@ double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBo
     }
 
     return finalPart;
+}*/
 
 void showPos(Word *word){
     for (Pos* i = listFirst(word->ocurrencias); i != NULL; i = listNext(word->ocurrencias) ){
@@ -237,7 +251,7 @@ void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks){
 
     char *mensaje = (char*) malloc(sizeof(char)*100);
     
-    clrscr()
+    clrscr();
     strcat(buf, "Ocurrencias en ");
     strcat(buf, _title);
     strcat(buf, ": \n");
