@@ -8,6 +8,7 @@ typedef struct{
     Map * words;    //Cambie por un mapa de palabras
     char bookName[50];
     char fileName[20];
+    int totalPalabras;
     long totalChar; //Cuenta el total de caracteres del libro
     long totalWords;//Cuenta el total de palabras en libro
     FILE* arch;     //Archivo

@@ -41,6 +41,7 @@ Book *createBook(){
     book->words = createMap(is_equal_string,lower_than_string);
     strcpy(book -> bookName, "");
     strcpy(book -> fileName, "");
+    book->totalPalabras = 0;
     book -> totalChar = 0;
     book -> totalWords = 0;
     return book;
@@ -161,6 +162,47 @@ void searchWord(Map* mapWords){
 
 }
 
+double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBooks){
+
+    Word* word = createWord();
+    Book* book = createBook();
+
+    word = searchMap(mapWords, palabra);
+    book = searchMap(mapBooks, titulo);
+
+    int totalOcurrencias = 0;//Total de veces que aparece la palabra en el libro
+    int totalLibros = 0;
+    int librosDiferentes = 0;
+    double finalPart = 0;
+    
+    char* lastBook;
+    strcpy ( lastBook, titulo);
+
+    if (word != NULL && book != NULL){
+        for (Pos* i = listFirst(word->ocurrencias); i != NULL; i = listNext(word->ocurrencias)){
+            if (strcmp(i->bookName, titulo) == 0){
+                totalOcurrencias++;
+            }else{
+                
+                if (strcmp(lastBook, i->bookName) != 0){
+                    strcpy(lastBook, i->bookName);
+                    librosDiferentes++;
+                }
+            }
+        }
+
+        double firstPart = totalOcurrencias / book->totalPalabras;
+
+        for (Book* i = firstMap(mapBooks); i != NULL; i = nextMap){
+            totalLibros++;
+        }
+
+        double secondPart = log(totalLibros /  librosDiferentes);  
+
+        finalPart = firstPart * secondPart;
+    }
+
+    return finalPart;
 
 void showPos(Word *word){
     for (Pos* i = listFirst(word->ocurrencias); i != NULL; i = listNext(word->ocurrencias) ){

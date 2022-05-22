@@ -25,7 +25,6 @@ void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title){
         word -> num = 1; 
         //insertMap(mapWords, text, word);
         _pushFront(mapWords, texto, word);
-
        // strcat(buf, texto);
        // strcat(buf, " guardada ");
     }else{
@@ -51,6 +50,7 @@ void import(char *name, Map * mapBooks, Map * mapWords){
 
     char title[100];
     int titleSaved = 0;
+    int totalPalabras = 0;
 
     char text[100];
     //char *text;
@@ -71,7 +71,8 @@ void import(char *name, Map * mapBooks, Map * mapWords){
                 text[pos] = '\0';
                 if(strlen(text) > 1){
                     wordsToMap(text, mapWords, bookPos, title);
-                    
+
+                    totalPalabras++;
                 }
                 bookPos = ftell(file);
                 memset(text, 0, 50);
@@ -109,6 +110,7 @@ void import(char *name, Map * mapBooks, Map * mapWords){
     Book *book = createBook();
     strcpy(book -> bookName, title);
     strcpy(book -> fileName, name);
+    book->totalPalabras = totalPalabras;
     _pushFront(mapBooks, book -> bookName, book);
 
     //free(text);
