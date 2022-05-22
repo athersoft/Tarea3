@@ -9,7 +9,7 @@
 
 void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title){
 
-    char *texto = (char *) malloc(sizeof(char)*50);
+    char *texto = (char *) malloc(sizeof(char)*100);
     strcpy(texto, text);
 
     Pos *pos = createPos();
@@ -59,17 +59,19 @@ void import(char *name, Map * mapBooks, Map * mapWords){
 
     int pos = 0;
     long cont = 0;
+    clrscr();
 
    while(1){
         text[pos] = fgetc(file);
         cont++;
-        clrscr();
         printf("%ld", cont);
+        printf("%s\n", text);
         if(titleSaved == 1){
             if(text[pos] == ' ' || text[pos] == '\n' || text[pos] == ',' || text[pos] == '.' || text[pos] == ':' || text[pos] == '['){
                 text[pos] = '\0';
                 if(strlen(text) > 1){
                     wordsToMap(text, mapWords, bookPos, title);
+                    
                 }
                 bookPos = ftell(file);
                 memset(text, 0, 50);
@@ -107,7 +109,7 @@ void import(char *name, Map * mapBooks, Map * mapWords){
     Book *book = createBook();
     strcpy(book -> bookName, title);
     strcpy(book -> fileName, name);
-    insertMap(mapBooks, book -> bookName, book);
+    _pushFront(mapBooks, book -> bookName, book);
 
     //free(text);
     fclose(file);

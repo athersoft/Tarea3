@@ -21,7 +21,7 @@ typedef struct{
 
 typedef struct{
     long int pos;
-    char bookName[50];
+    char bookName[100];
 }Pos;
 
 Word *createWord();
@@ -38,4 +38,5 @@ int is_equal_string(void * key1, void * key2);
 int lower_than_string(void * key1, void * key2);
 
 void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks);
+void searchContext(Map *mapWords, Map *mapBooks);
 #endif

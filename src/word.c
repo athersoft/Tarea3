@@ -173,23 +173,23 @@ void showWords(Map * mapWords){
 
 void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks){
     Word *word = searchMap(mapWords, _word);
+    if(word == NULL){
+        strcat(buf, "Palabra no encontrada");
+        return;
+    }
     Book *book = searchMap(mapBooks, _title);
+    if(book == NULL){
+        strcat(buf, "Libro no encontrado");
+        return;
+    }
     FILE *file = fopen(book ->fileName , "r");
 
-    int contPalabras = 0;
-    char mensaje[100];
-    int pos = 0;
+    char *mensaje = (char*) malloc(sizeof(char)*100);
 
     for (Pos* i = listFirst(word->ocurrencias); i != NULL; i = listNext(word->ocurrencias) ){
         if(strcmp(i -> bookName, book ->bookName) == 0){
             fseek(file, i->pos, SEEK_SET);
-            while(contPalabras < 10){
-                mensaje[pos] = fgetc(file);
-                pos++;
-                if(mensaje[pos] == ' ' || mensaje[pos] == '\n' || mensaje[pos] == ',' || mensaje[pos] == '.'){
-                    contPalabras++;
-                }
-            }
+            fgets(mensaje,100,file);
             strcat(buf, "Ocurrencia: ");
             strcat(buf, mensaje);
         }
@@ -197,7 +197,21 @@ void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks){
     fclose(file);
 }
 
+void searchContext(Map *mapWords, Map *mapBooks){
+    char *palabra = (char *) malloc(sizeof(char)*50);
+    printf("Ingresa la palabra que quiere buscar: ");
+    fflush(stdin);
+    scanf("%[^\n]*s", palabra);
+    getchar();
 
+    char *titulo = (char *) malloc(sizeof(char)*50);
+    printf("Ingresa el titulo del libro: ");
+    fflush(stdin);
+    scanf("%[^\n]*s", titulo);
+    getchar();
+
+    showInContext(palabra, titulo, mapWords, mapBooks);
+}
 /*Problemas
 
 
