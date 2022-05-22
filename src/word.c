@@ -161,15 +161,24 @@ void searchWord(Map* mapWords){
 
 }
 
+
+void showPos(Word *word){
+    for (Pos* i = listFirst(word->ocurrencias); i != NULL; i = listNext(word->ocurrencias) ){
+        strcat(buf, i->bookName);
+    }
+}
+
 void showWords(Map * mapWords){
     for(Word *word = firstMap(mapWords);
             word != NULL; 
             word = nextMap(mapWords)) 
     {
         strcat(buf, word ->name);
+        showPos(word);
         strcat(buf, "\n");
     }
 }
+
 
 void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks){
     Word *word = searchMap(mapWords, _word);
@@ -185,12 +194,17 @@ void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks){
     FILE *file = fopen(book ->fileName , "r");
 
     char *mensaje = (char*) malloc(sizeof(char)*100);
+    
+    clrscr()
+    strcat(buf, "Ocurrencias en ");
+    strcat(buf, _title);
+    strcat(buf, ": \n");
 
     for (Pos* i = listFirst(word->ocurrencias); i != NULL; i = listNext(word->ocurrencias) ){
         if(strcmp(i -> bookName, book ->bookName) == 0){
             fseek(file, i->pos, SEEK_SET);
             fgets(mensaje,100,file);
-            strcat(buf, "Ocurrencia: ");
+            strcat(buf, "-");
             strcat(buf, mensaje);
         }
     }
