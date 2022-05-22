@@ -15,6 +15,7 @@ void mostrarMenu(){
     printf("'b' : Buscar libro\n");
     printf("'B' : Mostrar palabras mas frecuentes\n");
     printf("'A' : Mostrar palabras mas relevantes\n");
+    printf("'C' : Mostrar palabra en su contexto\n");
     printf("'X' : Buscar palabra\n");
 
     printf("'q' : Salir\n");

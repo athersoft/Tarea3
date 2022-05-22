@@ -34,7 +34,8 @@ struct Map {
 
 };
 
-Map * createMap(int (*is_equal)(void* key1, void* key2));
+//Agregar lower_than desde que se crea el mapa
+Map * createMap(int (*is_equal)(void* key1, void* key2),int (*lower_than)(void* key1, void* key2));
 
 void insertMap(Map * map, void * key, void * value);
 
@@ -50,4 +51,5 @@ void setSortFunction(Map* map, int (*lower_than)(void* key1, void* key2));
 
 void _pushFront(Map * list, void * key, void * value);
 
+void showInContext(char *word, char *title, Map *mapWords, Map *mapBooks);
 #endif /* MAP_h */

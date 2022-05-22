@@ -9,7 +9,7 @@
 
 void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title){
 
-    char *texto = (char *) malloc(sizeof(char)*50);
+    char *texto = (char *) malloc(sizeof(char)*100);
     strcpy(texto, text);
 
     Pos *pos = createPos();
@@ -25,10 +25,8 @@ void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title){
         word -> num = 1; 
         //insertMap(mapWords, text, word);
         _pushFront(mapWords, texto, word);
-
-        strcat(buf, texto);
-        strcat(buf, " guardada ");
-
+       // strcat(buf, texto);
+       // strcat(buf, " guardada ");
     }else{
         //word = searchMap(mapWords,text);
         //if(strcmp(word -> name,text) == 0){
@@ -50,25 +48,30 @@ void import(char *name, Map * mapBooks, Map * mapWords){
     FILE *file;
     file = fopen(name, "r");
 
-    char title[50];
+    char title[100];
     int titleSaved = 0;
     int totalPalabras = 0;
 
-    char text[50];
+    char text[100];
     //char *text;
     //text = (char*) malloc(sizeof(char)*2);
     long int bookPos = ftell(file);
 
     int pos = 0;
+    long cont = 0;
+    clrscr();
 
    while(1){
         text[pos] = fgetc(file);
-
+        cont++;
+        printf("%ld", cont);
+        printf("%s\n", text);
         if(titleSaved == 1){
-            if(text[pos] == ' ' || text[pos] == '\n' || text[pos] == ',' || text[pos] == '.'){
+            if(text[pos] == ' ' || text[pos] == '\n' || text[pos] == ',' || text[pos] == '.' || text[pos] == ':' || text[pos] == '['){
                 text[pos] = '\0';
                 if(strlen(text) > 1){
                     wordsToMap(text, mapWords, bookPos, title);
+
                     totalPalabras++;
                 }
                 bookPos = ftell(file);
@@ -108,6 +111,8 @@ void import(char *name, Map * mapBooks, Map * mapWords){
     strcpy(book -> bookName, title);
     strcpy(book -> fileName, name);
     book->totalPalabras = totalPalabras;
+    _pushFront(mapBooks, book -> bookName, book);
+
     //free(text);
     fclose(file);
     

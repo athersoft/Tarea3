@@ -3,7 +3,7 @@
 
 /* manipulación de Strings */
 #include <string.h>
-
+/*Probando*/
 #include "import.h"
 #include "menu.h"
 #include "util.h"
@@ -12,14 +12,15 @@
 #include "map.h"
 #include "word.h"
 
-int lower_than_string(void* key1, void* key2);
-int is_equal_string(void * key1, void * key2);
+
 
 
 /* main function */
 int main(){
-    Map * mapBooks = createMap(is_equal_string);
-    Map * mapWords = createMap(is_equal_string);
+    Map * mapBooks = createMap(is_equal_string,lower_than_string);
+    Map * mapWords = createMap(is_equal_string,lower_than_string);
+    Book * test = createBook();
+    Book * test2 = createBook();
 
     char in = '\0';
 
@@ -33,11 +34,17 @@ int main(){
             case ('c'): // Importar libro
                 importBook(mapBooks, mapWords);
                 break;
-
             case ('m'): // Mostrar documentos 
                 showWords(mapWords);
                 break;
             case('b'): // Buscar libro
+                initBook(test,"hola");
+                readBook(test);
+                bookToMap(mapBooks,test);
+                initBook(test2,"67937");
+                readBook(test2);
+                bookToMap(mapBooks,test2);
+                scanf("%c",&in);
                 break;
             case('B'): // Mostrar palabras mas frecuentes
                 break;
@@ -46,6 +53,11 @@ int main(){
             case('X'): // Buscar palabra
                 searchWord(mapWords);
                 break;
+            case('C'):
+            
+                searchContext(mapWords, mapBooks);
+                break;
+            
             default:
                 break;
           } 
@@ -56,14 +68,3 @@ int main(){
 }
 
 
-int is_equal_string(void * key1, void * key2) {
-    if(strcmp((char*)key1, (char*)key2)==0) return 1;
-    return 0;
-}
-
-int lower_than_string(void* key1, void* key2){
-    char* k1=(char*) key1;
-    char* k2=(char*) key2;
-    if(strcmp(k1,k2)<0) return 1;
-    return 0;
-}
