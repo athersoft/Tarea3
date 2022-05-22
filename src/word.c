@@ -279,6 +279,27 @@ void searchContext(Map *mapWords, Map *mapBooks){
 
     showInContext(palabra, titulo, mapWords, mapBooks);
 }
+
+TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
+    TreeMap *map = createTreeMap(lower_than_int);
+    int found = 0;
+    double relev = 0;
+    for(Word *i = firstMap(mapWords); i!= NULL; i = nextMap(mapWords)){
+        for(Pos* j = listFirst(i->ocurrencias); j != NULL; j = listNext(i->ocurrencias) ){
+            if(found == 0){
+                if(strcmp(j->bookName, title) == 0){
+                    found = 1;
+                    break;
+                }
+            }
+        }
+        if(found == 1){
+            relev = relevanciaPalabras(i -> name, title, mapWords, mapBooks);
+        }
+        found = 0;
+    }
+    return map;
+}
 /*Problemas
 
 

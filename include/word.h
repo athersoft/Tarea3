@@ -43,4 +43,5 @@ int lower_than_string(void * key1, void * key2);
 
 void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks);
 void searchContext(Map *mapWords, Map *mapBooks);
+TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title);
 #endif
