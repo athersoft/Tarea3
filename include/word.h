@@ -7,6 +7,7 @@ typedef struct{
     List *mostFrecuents;
     char bookName[50];
     char fileName[20];
+    int totalPalabras;
 }Book;
 
 typedef struct{
