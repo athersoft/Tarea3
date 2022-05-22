@@ -26,8 +26,8 @@ void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title){
         //insertMap(mapWords, text, word);
         _pushFront(mapWords, texto, word);
 
-        strcat(buf, texto);
-        strcat(buf, " guardada ");
+       // strcat(buf, texto);
+       // strcat(buf, " guardada ");
     }else{
         //word = searchMap(mapWords,text);
         //if(strcmp(word -> name,text) == 0){
@@ -49,21 +49,24 @@ void import(char *name, Map * mapBooks, Map * mapWords){
     FILE *file;
     file = fopen(name, "r");
 
-    char title[50];
+    char title[100];
     int titleSaved = 0;
 
-    char text[50];
+    char text[100];
     //char *text;
     //text = (char*) malloc(sizeof(char)*2);
     long int bookPos = ftell(file);
 
     int pos = 0;
+    long cont = 0;
 
    while(1){
         text[pos] = fgetc(file);
-
+        cont++;
+        clrscr();
+        printf("%ld", cont);
         if(titleSaved == 1){
-            if(text[pos] == ' ' || text[pos] == '\n' || text[pos] == ',' || text[pos] == '.'){
+            if(text[pos] == ' ' || text[pos] == '\n' || text[pos] == ',' || text[pos] == '.' || text[pos] == ':' || text[pos] == '['){
                 text[pos] = '\0';
                 if(strlen(text) > 1){
                     wordsToMap(text, mapWords, bookPos, title);
@@ -104,6 +107,7 @@ void import(char *name, Map * mapBooks, Map * mapWords){
     Book *book = createBook();
     strcpy(book -> bookName, title);
     strcpy(book -> fileName, name);
+    insertMap(mapBooks, book -> bookName, book);
 
     //free(text);
     fclose(file);

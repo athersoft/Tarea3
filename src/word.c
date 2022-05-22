@@ -4,6 +4,8 @@
 #include "map.h"
 #include "word.h"
 #include <string.h>
+#include <stdlib.h>
+#include <assert.h>
 
 //Comparar Strings
 int is_equal_string(void * key1, void * key2) {
@@ -168,6 +170,33 @@ void showWords(Map * mapWords){
         strcat(buf, "\n");
     }
 }
+
+void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks){
+    Word *word = searchMap(mapWords, _word);
+    Book *book = searchMap(mapBooks, _title);
+    FILE *file = fopen(book ->fileName , "r");
+
+    int contPalabras = 0;
+    char mensaje[100];
+    int pos = 0;
+
+    for (Pos* i = listFirst(word->ocurrencias); i != NULL; i = listNext(word->ocurrencias) ){
+        if(strcmp(i -> bookName, book ->bookName) == 0){
+            fseek(file, i->pos, SEEK_SET);
+            while(contPalabras < 10){
+                mensaje[pos] = fgetc(file);
+                pos++;
+                if(mensaje[pos] == ' ' || mensaje[pos] == '\n' || mensaje[pos] == ',' || mensaje[pos] == '.'){
+                    contPalabras++;
+                }
+            }
+            strcat(buf, "Ocurrencia: ");
+            strcat(buf, mensaje);
+        }
+    }
+    fclose(file);
+}
+
 
 /*Problemas
 

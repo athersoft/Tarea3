@@ -53,6 +53,23 @@ int main(){
             case('X'): // Buscar palabra
                 searchWord(mapWords);
                 break;
+            case('C'):
+            /*
+                char *palabra = (char *) malloc(sizeof(char)*50);
+                printf("Ingresa la palabra que quiere buscar: ");
+                fflush(stdin);
+                scanf("%[^\n]*s", palabra);
+                getchar();
+
+                char *titulo = (char *) malloc(sizeof(char)*50);
+                printf("Ingresa el titulo del libro: ");
+                fflush(stdin);
+                scanf("%[^\n]*s", titulo);
+                getchar();
+
+                showInContext(palabra, titulo, mapWords, mapBooks);
+                break;
+            */
             default:
                 break;
           } 
