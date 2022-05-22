@@ -35,7 +35,7 @@ int main(){
                 importBook(mapBooks, mapWords);
                 break;
             case ('m'): // Mostrar documentos 
-                showWords(mapWords);
+                //showWords(mapWords);
                 break;
             case('b'): // Buscar libro
                 initBook(test,"hola");

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 
 //Comparar Strings
 int is_equal_string(void * key1, void * key2) {
@@ -175,7 +176,7 @@ double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBo
     int librosDiferentes = 0;
     double finalPart = 0;
     
-    char* lastBook;
+    char lastBook[100];
     strcpy ( lastBook, titulo);
 
     if (word != NULL && book != NULL){
@@ -193,7 +194,7 @@ double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBo
 
         double firstPart = totalOcurrencias / book->totalPalabras;
 
-        for (Book* i = firstMap(mapBooks); i != NULL; i = nextMap){
+        for (Book* i = firstMap(mapBooks); i != NULL; i = nextMap(mapBooks)){
             totalLibros++;
         }
 
@@ -203,13 +204,16 @@ double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBo
     }
 
     return finalPart;
-
+}
+/*
 void showPos(Word *word){
     for (Pos* i = listFirst(word->ocurrencias); i != NULL; i = listNext(word->ocurrencias) ){
         strcat(buf, i->bookName);
     }
 }
+*/
 
+/*
 void showWords(Map * mapWords){
     for(Word *word = firstMap(mapWords);
             word != NULL; 
@@ -220,7 +224,7 @@ void showWords(Map * mapWords){
         strcat(buf, "\n");
     }
 }
-
+*/
 
 void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks){
     Word *word = searchMap(mapWords, _word);
@@ -236,8 +240,8 @@ void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks){
     FILE *file = fopen(book ->fileName , "r");
 
     char *mensaje = (char*) malloc(sizeof(char)*100);
-    
-    clrscr()
+
+    clrscr();
     strcat(buf, "Ocurrencias en ");
     strcat(buf, _title);
     strcat(buf, ": \n");
