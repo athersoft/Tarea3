@@ -44,4 +44,9 @@ int lower_than_string(void * key1, void * key2);
 void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks);
 void searchContext(Map *mapWords, Map *mapBooks);
 TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title);
+TreeMap *makeFrecencyTree(Map *mapWords, char *title);
+void showMostRelevant(char *titulo, Map *mapBooks, Map *mapWords);
+void searchMostRelevant(Map *mapBooks, Map* mapWords);
+void searchMostFrecuent(Map *mapBooks, Map* mapWords);
+void showMostFrecuent(char *titulo, Map *mapBooks, Map *mapWords);
 #endif

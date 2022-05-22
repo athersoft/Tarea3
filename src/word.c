@@ -22,7 +22,7 @@ int lower_than_string(void * key1, void * key2) {
 }
 
 int lower_than_int(void * key1, void * key2) {
-    if(*(int*)key1 < *(int*)key2) return 1;
+    if((double*)key1 < (double*)key2) return 1;
     return 0;
 }
 
@@ -172,7 +172,7 @@ void searchWord(Map* mapWords){
 
 }
 
-double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBooks){
+double *relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBooks){
 
     Word* word = createWord();
     Book* book = createBook();
@@ -180,10 +180,13 @@ double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBo
     word = searchMap(mapWords, palabra);
     book = searchMap(mapBooks, titulo);
 
-    int totalOcurrencias = 0;//Total de veces que aparece la palabra en el libro
-    int totalLibros = 0;
-    int librosDiferentes = 0;
-    double finalPart = 0;
+    int *totalOcurrencias = 0;//Total de veces que aparece la palabra en el libro
+    int *totalLibros = 0;
+    int *librosDiferentes = 0;
+
+    double *finalPart = 0;
+    double *firstPart = 0;
+    double *secondPart = 0;
     
     char lastBook[100];
     strcpy ( lastBook, titulo);
@@ -201,15 +204,15 @@ double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBo
             }
         }
 
-        double firstPart = totalOcurrencias / book->totalPalabras;
+        *firstPart = *totalOcurrencias / book->totalPalabras;
 
         for (Book* i = firstMap(mapBooks); i != NULL; i = nextMap(mapBooks)){
             totalLibros++;
         }
 
-        double secondPart = log(totalLibros /  librosDiferentes);  
+        *secondPart = log(*totalLibros / *librosDiferentes);  
 
-        finalPart = (firstPart * secondPart);
+        *finalPart = *firstPart * *secondPart;
     }
 
     return finalPart;
@@ -285,8 +288,8 @@ void searchContext(Map *mapWords, Map *mapBooks){
 TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
     TreeMap *map = createTreeMap(lower_than_int);
     int found = 0;
-    double relev;
-    int size = 0;
+    double *relev;
+    //int size = 0;
     for(Word *i = firstMap(mapWords); i!= NULL; i = nextMap(mapWords)){
         for(Pos* j = listFirst(i->ocurrencias); j != NULL; j = listNext(i->ocurrencias) ){
             if(found == 0){
@@ -298,23 +301,96 @@ TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
         }
         if(found == 1){
             relev = relevanciaPalabras(i -> name, title, mapWords, mapBooks);
-            if(size < 10){            
-                insertTreeMap(map, &relev, i->name);
+            insertTreeMap(map, relev, i->name); 
+            /*
+            if(size < 11){            
+                insertTreeMap(map, relev, i->name); 
+                
                 size++;
             }else{
-                if(relev > (int)firstTreeMap(map)->key){
+                if(relev > (double*)firstTreeMap(map)->key){
+                    strcat(buf, i->name);
+                    strcat(buf, " ");
                     eraseTreeMap(map, firstTreeMap(map)->key);
-                    insertTreeMap(map, &relev, i->name);
+                    insertTreeMap(map, relev, i->name);
                 }
-                //if(relev > (int)(minimum(map->root)-> pair-> key)){
-                //    eraseTreeMap(map, minimum(map->root));
-                //    insertTreeMap(map, &relev, i->name);
-                //}
+               // if(relev > (int)(minimum(map->root)-> pair-> key)){
+               //     eraseTreeMap(map, minimum(map->root));
+               //     insertTreeMap(map, relev, i->name);
+               // }
             }
+            */
         }
         found = 0;
     }
+    
     return map;
+}
+
+void showMostRelevant(char *titulo, Map *mapBooks, Map *mapWords){
+    Book *book = searchMap(mapBooks, titulo);
+    if(book == NULL){
+        strcat(buf, "Libro no encontrado");
+        return;
+    }
+    strcat(buf, "Palabras mas relevantes:\n");
+    
+    for(Pair *i = firstTreeMap(book -> mostRelevant); i!= NULL; i = nextTreeMap(book -> mostRelevant)){
+        strcat(buf, i->value);
+        strcat(buf, "\n");
+    }
+
+}
+
+void searchMostRelevant(Map *mapBooks, Map *mapWords){
+    char *titulo = (char *) malloc(sizeof(char)*100);
+    printf("Ingresa el titulo del libro: ");
+    fflush(stdin);
+    scanf("%[^\n]*s", titulo);
+    getchar();
+
+    showMostRelevant(titulo, mapBooks, mapWords);
+}
+
+
+
+TreeMap *makeFrecencyTree(Map *mapWords, char *title){
+    TreeMap *map = createTreeMap(lower_than_int);
+    int frecuency = 0;
+    for(Word *i = firstMap(mapWords); i!= NULL; i = nextMap(mapWords)){
+        for(Pos* j = listFirst(i->ocurrencias); j != NULL; j = listNext(i->ocurrencias) ){
+            if(strcmp(j->bookName, title) == 0){
+                frecuency++;
+            }
+        }
+        insertTreeMap(map, &frecuency, i->name);
+    }
+    return map;
+}
+
+void showMostFrecuent(char *titulo, Map *mapBooks, Map *mapWords){
+    Book *book = searchMap(mapBooks, titulo);
+    if(book == NULL){
+        strcat(buf, "Libro no encontrado");
+        return;
+    }
+    strcat(buf, "Palabras mas frecuentes:\n");
+    
+    for(Pair *i = firstTreeMap(book -> mostFrecuent); i!= NULL; i = nextTreeMap(book -> mostFrecuent)){
+        strcat(buf, i->value);
+        strcat(buf, "\n");
+    }
+
+}
+
+void searchMostFrecuent(Map *mapBooks, Map* mapWords){
+    char *titulo = (char *) malloc(sizeof(char)*100);
+    printf("Ingresa el titulo del libro: ");
+    fflush(stdin);
+    scanf("%[^\n]*s", titulo);
+    getchar();
+
+    showMostFrecuent(titulo, mapBooks, mapWords);
 }
 /*Problemas
 

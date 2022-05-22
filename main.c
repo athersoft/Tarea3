@@ -47,8 +47,10 @@ int main(){
                 scanf("%c",&in);
                 break;
             case('B'): // Mostrar palabras mas frecuentes
+                searchMostFrecuent(mapBooks, mapWords);
                 break;
             case('A'): // Mostrar palabras mas relevantes
+                searchMostRelevant(mapBooks, mapWords);
                 break;
             case('X'): // Buscar palabra
                 searchWord(mapWords);
