@@ -2,12 +2,15 @@
 #define WORD_H
 #include "list.h"
 #include "map.h"
+#include "treemap.h"
 #include <stdio.h>
 
 typedef struct{
     Map * words;    //Cambie por un mapa de palabras
     char bookName[50];
     char fileName[20];
+    TreeMap *mostRelevant;
+    TreeMap *mostFrecuent;
     int totalPalabras;
     long totalChar; //Cuenta el total de caracteres del libro
     long totalWords;//Cuenta el total de palabras en libro

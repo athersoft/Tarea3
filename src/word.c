@@ -19,6 +19,11 @@ int lower_than_string(void * key1, void * key2) {
     return 0;
 }
 
+int lower_than_int(void * key1, void * key2) {
+    if(*(int*)key1 < *(int*)key2) return 1;
+    return 0;
+}
+
 Word *createWord(){
     Word *word = (Word*) malloc(sizeof(Word));
     strcpy(word -> name, "");
@@ -45,6 +50,8 @@ Book *createBook(){
     book->totalPalabras = 0;
     book -> totalChar = 0;
     book -> totalWords = 0;
+    book -> mostRelevant = createTreeMap(lower_than_int);
+    book -> mostFrecuent = createTreeMap(lower_than_int);
     return book;
 }
 
