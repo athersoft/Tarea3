@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
+#include "treemap.h"
+
 
 //Comparar Strings
 int is_equal_string(void * key1, void * key2) {
@@ -207,7 +209,7 @@ double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBo
 
         double secondPart = log(totalLibros /  librosDiferentes);  
 
-        finalPart = firstPart * secondPart;
+        finalPart = (firstPart * secondPart);
     }
 
     return finalPart;
@@ -283,7 +285,8 @@ void searchContext(Map *mapWords, Map *mapBooks){
 TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
     TreeMap *map = createTreeMap(lower_than_int);
     int found = 0;
-    double relev = 0;
+    double relev;
+    int size = 0;
     for(Word *i = firstMap(mapWords); i!= NULL; i = nextMap(mapWords)){
         for(Pos* j = listFirst(i->ocurrencias); j != NULL; j = listNext(i->ocurrencias) ){
             if(found == 0){
@@ -295,6 +298,19 @@ TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
         }
         if(found == 1){
             relev = relevanciaPalabras(i -> name, title, mapWords, mapBooks);
+            if(size < 10){            
+                insertTreeMap(map, &relev, i->name);
+                size++;
+            }else{
+                if(relev > (int)firstTreeMap(map)->key){
+                    eraseTreeMap(map, firstTreeMap(map)->key);
+                    insertTreeMap(map, &relev, i->name);
+                }
+                //if(relev > (int)(minimum(map->root)-> pair-> key)){
+                //    eraseTreeMap(map, minimum(map->root));
+                //    insertTreeMap(map, &relev, i->name);
+                //}
+            }
         }
         found = 0;
     }
