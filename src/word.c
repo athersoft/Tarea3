@@ -86,7 +86,7 @@ void context(Book *book, char * word){
     rewind(book -> arch);
     char * x = malloc(1024 * sizeof(char));
     while (fscanf(book -> arch, "%[^\n] ", x) != EOF) {
-        lower(x);
+        //lower(x);
         char * search = strstr(x,word);
         if(search != NULL){
             printf("> %s\n", x);
@@ -281,6 +281,14 @@ void searchContext(Map *mapWords, Map *mapBooks){
     getchar();
 
     showInContext(palabra, titulo, mapWords, mapBooks);
+}
+
+void showBook(Book *book) {
+    printf("ID: %s\n", book->fileName);
+    printf("Titulo: %s\n", book->bookName);
+    printf("Palabras: %d\n", book->totalPalabras);
+    printf("Caracteres: %d\n", book->totalChar);
+
 }
 /*Problemas
 
