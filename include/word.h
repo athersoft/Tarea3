@@ -36,7 +36,7 @@ void searchWord(Map* mapWords);
 void showWords(Map*mapWords);
 void readBook(Book * book);             //Agregada
 void bookToMap(Map *mapBook, Book *book);//Agregada
-
+void searchBook(Map* mapBooks);
 //Funciones para comparar strings
 int is_equal_string(void * key1, void * key2);  
 int lower_than_string(void * key1, void * key2);

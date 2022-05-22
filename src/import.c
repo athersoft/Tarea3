@@ -113,8 +113,8 @@ void import(char *name, Map * mapBooks, Map * mapWords){
     strcpy(book -> fileName, name);
     book -> totalChar = cont;
     book->totalPalabras = totalPalabras;
-    book -> mostRelevant = makeRelevantTree(mapWords, mapBooks, book ->bookName);
-    _pushFront(mapBooks, book -> bookName, book);
+    //book -> mostRelevant = makeRelevantTree(mapWords, mapBooks, book ->bookName);
+    _pushFront(mapBooks, book->bookName, book);
 
     //free(text);
     fclose(file);

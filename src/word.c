@@ -138,6 +138,42 @@ void bookToMap(Map *mapBook, Book *book){
     return;
 }
 
+void searchBook(Map* mapBooks){
+    //Word* aux = createWord();
+    char titulo[100];
+    printf("Ingresa la libro que quiere buscar: ");
+    fflush(stdin);
+    scanf("%[^\n]*s", titulo);
+    getchar();
+    char *token = (char *) malloc(sizeof(char)*50);
+    List* palabraTitulo = listCreate();
+    int cont = 0;
+    int validaciones;
+    token = strtok(titulo, " ");
+
+    while (token != NULL) {
+        listPushFront(palabraTitulo, token);
+        token = strtok(NULL, " ");
+        cont++;
+    }
+
+    for (char* k = firstMap(mapBooks); k != NULL; k = nextMap(mapBooks)){
+        for (char* i = listFirst(palabraTitulo); i != NULL; i = listNext(palabraTitulo) ){
+            if (strstr(mapBooks->current->data, i)){
+                validaciones++;
+            }
+        }
+
+        if (validaciones == cont){
+            break;
+        }
+    }
+
+
+
+
+
+}
 
 
 void searchWord(Map* mapWords){
@@ -147,6 +183,7 @@ void searchWord(Map* mapWords){
     fflush(stdin);
     scanf("%[^\n]*s", palabra);
     getchar();
+    
 
     //char last_book[50] = NULL;
 
@@ -212,6 +249,7 @@ double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBo
 
     return finalPart;
 }
+
 /*
 void showPos(Word *word){
     for (Pos* i = listFirst(word->ocurrencias); i != NULL; i = listNext(word->ocurrencias) ){
@@ -280,7 +318,7 @@ void searchContext(Map *mapWords, Map *mapBooks){
     showInContext(palabra, titulo, mapWords, mapBooks);
 }
 
-TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
+/*TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
     TreeMap *map = createTreeMap(lower_than_int);
     int found = 0;
     double relev = 0;
@@ -299,7 +337,7 @@ TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
         found = 0;
     }
     return map;
-}
+}*/
 /*Problemas
 
 
