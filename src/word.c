@@ -83,7 +83,10 @@ void initBook(Book * book,char *id){
 }
 
 void context(Book *book, char * word){
-    rewind(book -> arch);
+    char open[20];
+    strcpy(open, book -> fileName);
+    strcat(open, ".txt");
+    book -> arch = fopen(open, "r");
     char * x = malloc(1024 * sizeof(char));
     while (fscanf(book -> arch, "%[^\n] ", x) != EOF) {
         //lower(x);
