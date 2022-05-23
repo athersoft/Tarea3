@@ -63,7 +63,7 @@ void import(char *name, Map * mapBooks, Map * mapWords){
 
    while(1){
         text[pos] = fgetc(file);
-        //cont++;
+        cont++;
         //printf("%ld", cont);
         //printf("%s\n", text);
         if(titleSaved == 1){

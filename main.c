@@ -33,6 +33,7 @@ int main(){
         switch(in) {
             case ('c'): // Importar libro
                 importBook(mapBooks, mapWords);
+                test = firstMap(mapBooks);
                 break;
             case ('m'): // Mostrar documentos 
                 
@@ -41,8 +42,12 @@ int main(){
                 searchBook(mapBooks);
                 break;
             case('B'): // Mostrar palabras mas frecuentes
+                showBook(test);
+                scanf("%c",&in);
                 break;
             case('A'): // Mostrar palabras mas relevantes
+                printf("“Stout old heart,” cheered Tiadatha,");
+                scanf("%c",&in);
                 break;
             case('X'): // Buscar palabra
                 searchWord(mapWords);

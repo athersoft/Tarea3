@@ -90,6 +90,22 @@ void initBook(Book * book,char *id){
 
 }
 
+void context(Book *book, char * word){
+    char open[20];
+    strcpy(open, book -> fileName);
+    strcat(open, ".txt");
+    book -> arch = fopen(open, "r");
+    char * x = malloc(1024 * sizeof(char));
+    while (fscanf(book -> arch, "%[^\n] ", x) != EOF) {
+        //lower(x);
+        char * search = strstr(x,word);
+        if(search != NULL){
+            printf("> %s\n", x);
+        }
+        
+    }
+}
+
 void readBook(Book * book){
     rewind(book->arch);//Vuelve a abrir al inicio del archivo
     char * x = malloc(1024 * sizeof (char) );
@@ -212,7 +228,7 @@ void searchWord(Map* mapWords){
 
 }
 
-double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBooks){
+/*double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBooks){
 
     Word* word = createWord();
     Book* book = createBook();
@@ -253,7 +269,8 @@ double relevanciaPalabras(char* palabra, char* titulo, Map* mapWords, Map* mapBo
     }
 
     return finalPart;
-}
+
+}*/
 
 /*
 void showPos(Word *word){
@@ -323,7 +340,7 @@ void searchContext(Map *mapWords, Map *mapBooks){
     showInContext(palabra, titulo, mapWords, mapBooks);
 }
 
-/*TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
+TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
     TreeMap *map = createTreeMap(lower_than_int);
     int found = 0;
     double relev = 0;
@@ -342,7 +359,25 @@ void searchContext(Map *mapWords, Map *mapBooks){
         found = 0;
     }
     return map;
-}*/
+    
+void showMapBook(Map * mapBook){
+    Book *aux = firstMap(mapBook);
+    while (aux != NULL){
+        showBook(aux);
+        aux = nextMap(mapBook);
+    }
+    
+}
+
+
+void showBook(Book *book) {
+    printf("ID: %s\n", book->fileName);
+    printf("Titulo: %s\n", book->bookName);
+    printf("Palabras: %d\n", book->totalPalabras);
+    printf("Caracteres: %d\n", book->totalChar);
+
+}
+
 /*Problemas
 
 
