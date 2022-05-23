@@ -132,10 +132,25 @@ void import(char *name, Map * mapBooks, Map * mapWords){
 
 void importBook(Map* mapBooks, Map* mapWords) {
     char archivo[30];
-    printf("Ingresa el nombre del libro a importar: ");
+    printf("Ingrese la id del libro a importar: ");
     fflush(stdin);
     scanf("%[^\n]*s", archivo);
     getchar();
+    FILE* file;
+    file = fopen(archivo, "r");
+    if(file == NULL){
+        
+        while(file == NULL){
+            printf("Ingrese nuevamente la id del libro (recuerde ingresar '.txt' al final de cada id): ");
+            scanf("%[^\n]*s", archivo);
+            getchar();
+            file = fopen(archivo, "r");
+        }
+    }else{
+        fclose(file);
+        import(archivo, mapBooks, mapWords);
+    }
+    fclose(file);
     import(archivo, mapBooks, mapWords);
 }
 

@@ -46,7 +46,7 @@ void bookToMap(Map *mapBook, Book *book);//Agregada
 //Funciones para comparar strings
 int is_equal_string(void * key1, void * key2);  
 int lower_than_string(void * key1, void * key2);
-
+void searchBook(Map* mapBooks);
 void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks);
 void searchContext(Map *mapWords, Map *mapBooks);
 List *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title);

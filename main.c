@@ -36,6 +36,7 @@ int main(){
                 showBook(mapBooks);
                 break;
             case('b'): // Buscar libro
+                searchBook(mapBooks);
                 break;
             case('B'): // Mostrar palabras mas frecuentes
                 searchMostFrecuent(mapBooks, mapWords);
