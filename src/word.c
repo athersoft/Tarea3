@@ -449,21 +449,28 @@ void searchMostFrecuent(Map *mapBooks, Map* mapWords){
     showMostFrecuent(titulo, mapBooks, mapWords);
 }
 
-void showMapBook(Map * mapBook){
+
+
+void showBook(Map * mapBook) {
     Book *aux = firstMap(mapBook);
-    while (aux != NULL){
-        showBook(aux);
+    while(aux != NULL){
+        strcat(buf, "ID: ");
+        strcat(buf, aux->fileName);
+        strcat(buf, "\n");
+        strcat(buf, "Titulo: ");
+        strcat(buf, aux->bookName);
+        strcat(buf, "\n");
+        strcat(buf, "Palabras: ");
+        char num[10];
+        sprintf(num, "%lo", aux->totalPalabras);
+        strcat(buf, num);
+        strcat(buf, "\n");
+        strcat(buf, "Caracteres: ");
+        sprintf(num, "%lo", aux->totalChar);
+        strcat(buf, num);
+        strcat(buf, "\n");
         aux = nextMap(mapBook);
     }
-    
-}
-
-
-void showBook(Book *book) {
-    printf("ID: %s\n", book->fileName);
-    printf("Titulo: %s\n", book->bookName);
-    printf("Palabras: %d\n", book->totalPalabras);
-    printf("Caracteres: %d\n", book->totalChar);
 
 }
 
