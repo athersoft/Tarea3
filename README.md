@@ -16,7 +16,7 @@ make
 
 * Mostrar documentos ordenados funciona pero el orden está invertido
 
-* Buscar libro
+* Buscar libro solo muestra el primero que encuentra
 
 * Mostrar palabras más frecuentes no muestra las palabras de forma ordenada
 
@@ -46,3 +46,5 @@ make
 * Bryam: 3
 * Matias: 0
 * Nestor: -3
+
+Nota extra: En git no aparece vinculada la cuenta de Bryam en los commit, pero si el nombre de la cuenta (athersoft)
