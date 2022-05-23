@@ -42,6 +42,12 @@ void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title){
     //strcat(buf, " guardada ");//
 }
 
+void listCreation(Map *mapBooks, Map* mapWords, char *title){
+    Book *book = searchMap(mapBooks, title);
+    book -> mostRelevant = makeRelevantTree(mapWords, mapBooks, book ->bookName);
+    book -> mostFrecuent = makeFrecencyTree(mapWords, book -> bookName);
+}
+
 void import(char *name, Map * mapBooks, Map * mapWords){
     clrscr();
     printf("\nCargando libro, espere un momento...");
@@ -107,16 +113,17 @@ void import(char *name, Map * mapBooks, Map * mapWords){
         
     }
     
-    strcat(buf, "Libro Guardado");
+    strcat(buf, title);
+    strcat(buf, " guardado correctamente");
+
     Book *book = createBook();
     strcpy(book -> bookName, title);
     strcpy(book -> fileName, name);
     book -> totalChar = cont;
     book->totalPalabras = totalPalabras;
-    book -> mostRelevant = makeRelevantTree(mapWords, mapBooks, book ->bookName);
-    book -> mostFrecuent = makeFrecencyTree(mapWords, book -> bookName);
     _pushFront(mapBooks, book -> bookName, book);
 
+    listCreation(mapBooks, mapWords, book -> bookName);
     //free(text);
     fclose(file);
     

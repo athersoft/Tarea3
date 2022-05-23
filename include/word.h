@@ -7,10 +7,10 @@
 
 typedef struct{
     Map * words;    //Cambie por un mapa de palabras
-    char bookName[50];
+    char bookName[100];
     char fileName[20];
-    TreeMap *mostRelevant;
-    TreeMap *mostFrecuent;
+    List *mostRelevant;
+    List *mostFrecuent;
     int totalPalabras;
     long totalChar; //Cuenta el total de caracteres del libro
     long totalWords;//Cuenta el total de palabras en libro
@@ -28,9 +28,15 @@ typedef struct{
     char bookName[100];
 }Pos;
 
+typedef struct{
+    char name[100];
+    long double value;
+}listNode;
+
 Word *createWord();
 Pos *createPos();
 Book *createBook();
+listNode *createlistNode();
 void initBook(Book * book,char *id);    //Agregada
 void searchWord(Map* mapWords);
 void showWords(Map*mapWords);
@@ -43,8 +49,8 @@ int lower_than_string(void * key1, void * key2);
 
 void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks);
 void searchContext(Map *mapWords, Map *mapBooks);
-TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title);
-TreeMap *makeFrecencyTree(Map *mapWords, char *title);
+List *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title);
+List *makeFrecencyTree(Map *mapWords, char *title);
 void showMostRelevant(char *titulo, Map *mapBooks, Map *mapWords);
 void searchMostRelevant(Map *mapBooks, Map* mapWords);
 void searchMostFrecuent(Map *mapBooks, Map* mapWords);
