@@ -281,8 +281,7 @@ List *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
     int found = 0;
     long double relev;
 
-    //char str[10];
-    //int size = 0;
+    int cont = 0;
     for(Word *i = firstMap(mapWords); i!= NULL; i = nextMap(mapWords)){
         for(Pos* j = listFirst(i->ocurrencias); j != NULL; j = listNext(i->ocurrencias) ){
             if(found == 0){
@@ -293,11 +292,27 @@ List *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
             }
         }
         if(found == 1){
-            relev = relevanciaPalabras(i -> name, title, mapWords, mapBooks);
-            listNode *node = createlistNode();
-            node -> value = relev;
-            strcpy(node -> name, i -> name);
-            listPushFront(map, node);
+
+            if(cont < 11){
+                relev = relevanciaPalabras(i -> name, title, mapWords, mapBooks);
+                listNode *node = createlistNode();
+                node -> value = relev;
+                strcpy(node -> name, i -> name);
+                listPushFront(map, node);
+                cont++;
+            }else{
+                relev = relevanciaPalabras(i -> name, title, mapWords, mapBooks);
+                listNode *node = createlistNode();
+                node -> value = relev;
+                strcpy(node -> name, i -> name);
+
+                for(listNode *i = listFirst(map); i!=NULL; i = listNext(map)){
+                    if(i -> value < node -> value){
+                        listPushCurrent(map, node);
+                        listPopBack(map);
+                    }
+                }
+            }
         }
         found = 0;
     }
@@ -318,6 +333,7 @@ void showMostRelevant(char *titulo, Map *mapBooks, Map *mapWords){
         strcat(buf, "\n");
     }
 
+
 }
 
 void searchMostRelevant(Map *mapBooks, Map *mapWords){
@@ -335,16 +351,32 @@ void searchMostRelevant(Map *mapBooks, Map *mapWords){
 List *makeFrecencyTree(Map *mapWords, char *title){
     List *map = listCreate();
     int frecuency = 0;
+    int cont = 0;
     for(Word *i = firstMap(mapWords); i!= NULL; i = nextMap(mapWords)){
         for(Pos* j = listFirst(i->ocurrencias); j != NULL; j = listNext(i->ocurrencias) ){
             if(strcmp(j->bookName, title) == 0){
                 frecuency++;
             }
         }
-            listNode *node = createlistNode();
-            node -> value = frecuency;
-            strcpy(node -> name, i -> name);
-            listPushFront(map, node);
+            if(cont < 11){
+                listNode *node = createlistNode();
+                node -> value = frecuency;
+                strcpy(node -> name, i -> name);
+            
+                listPushFront(map, node);
+                cont++;
+            }else{
+                listNode *node = createlistNode();
+                node -> value = frecuency;
+                strcpy(node -> name, i -> name);
+
+                for(listNode *i = listFirst(map); i!=NULL; i = listNext(map)){
+                    if(i -> value < node -> value){
+                        listPushCurrent(map, node);
+                        listPopBack(map);
+                    }
+                }
+            }
     }
     return map;
 }
