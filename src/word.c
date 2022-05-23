@@ -283,6 +283,16 @@ void searchContext(Map *mapWords, Map *mapBooks){
     showInContext(palabra, titulo, mapWords, mapBooks);
 }
 
+void showMapBook(Map * mapBook){
+    Book *aux = firstMap(mapBook);
+    while (aux != NULL){
+        showBook(aux);
+        aux = nextMap(mapBook);
+    }
+    
+}
+
+
 void showBook(Book *book) {
     printf("ID: %s\n", book->fileName);
     printf("Titulo: %s\n", book->bookName);
@@ -290,6 +300,9 @@ void showBook(Book *book) {
     printf("Caracteres: %d\n", book->totalChar);
 
 }
+
+
+
 /*Problemas
 
 
