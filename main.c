@@ -33,7 +33,7 @@ int main(){
                 importBook(mapBooks, mapWords);
                 break;
             case ('m'): // Mostrar documentos 
-                
+                showBook(mapBooks);
                 break;
             case('b'): // Buscar libro
                 break;
