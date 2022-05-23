@@ -330,6 +330,49 @@ void searchMostRelevant(Map *mapBooks, Map *mapWords){
     showMostRelevant(titulo, mapBooks, mapWords);
 }
 
+void searchBook(Map* mapBooks){
+    //Word* aux = createWord();
+    char titulo[100];
+    printf("Ingresa la libro que quiere buscar: ");
+    fflush(stdin);
+    scanf("%[^\n]*s", titulo);
+    getchar();
+    char *token = (char *) malloc(sizeof(char)*50);
+    List* palabraTitulo = listCreate();
+    int cont = 0;
+    int validaciones;
+    token = strtok(titulo, " ");
+    char aux[100];
+    while (token != NULL) {
+        listPushFront(palabraTitulo, token);
+        token = strtok(NULL, " ");
+        cont++;
+    } 
+
+    for (Book* k = firstMap(mapBooks); k != NULL; k = nextMap(mapBooks)){
+
+        for (char* i = listFirst(palabraTitulo); i != NULL; i = listNext(palabraTitulo) ){
+
+            if (strstr(k->bookName, i)){
+                validaciones++;
+                strcat(buf, k->bookName);
+            }
+        }
+
+        if (validaciones == cont){
+            strcat(buf, k->bookName);
+            sprintf(aux, "Total de palabras: %i\nTotal de caracteres: %i", k->totalPalabras, k->totalWords);
+            strcat(buf, aux);
+        }
+    }
+
+
+
+
+
+}
+
+
 
 
 List *makeFrecencyTree(Map *mapWords, char *title){
