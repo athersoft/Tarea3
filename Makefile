@@ -1,5 +1,5 @@
 CC=gcc
-NAME=tarea2
+NAME=tarea3
 SRC=$(wildcard src/*.c)
 INCLUDES=-Iinclude
 OBJS=$(patsubst src/%.c, out/%.o, $(SRC))

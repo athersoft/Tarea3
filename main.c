@@ -20,7 +20,6 @@ int main(){
     Map * mapBooks = createMap(is_equal_string,lower_than_string);
     Map * mapWords = createMap(is_equal_string,lower_than_string);
 
-
     char in = '\0';
 
     while(in != 'q' ){
@@ -34,7 +33,7 @@ int main(){
                 importBook(mapBooks, mapWords);
                 break;
             case ('m'): // Mostrar documentos 
-                
+                showBook(mapBooks);
                 break;
             case('b'): // Buscar libro
                 searchBook(mapBooks);

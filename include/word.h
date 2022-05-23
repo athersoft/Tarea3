@@ -55,4 +55,6 @@ void showMostRelevant(char *titulo, Map *mapBooks, Map *mapWords);
 void searchMostRelevant(Map *mapBooks, Map* mapWords);
 void searchMostFrecuent(Map *mapBooks, Map* mapWords);
 void showMostFrecuent(char *titulo, Map *mapBooks, Map *mapWords);
+void showBook(Map * mapBook);
+void context(Book *book, char * word);
 #endif

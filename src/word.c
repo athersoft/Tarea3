@@ -281,8 +281,7 @@ List *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
     int found = 0;
     long double relev;
 
-    //char str[10];
-    //int size = 0;
+    int cont = 0;
     for(Word *i = firstMap(mapWords); i!= NULL; i = nextMap(mapWords)){
         for(Pos* j = listFirst(i->ocurrencias); j != NULL; j = listNext(i->ocurrencias) ){
             if(found == 0){
@@ -293,11 +292,27 @@ List *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
             }
         }
         if(found == 1){
-            relev = relevanciaPalabras(i -> name, title, mapWords, mapBooks);
-            listNode *node = createlistNode();
-            node -> value = relev;
-            strcpy(node -> name, i -> name);
-            listPushFront(map, node);
+
+            if(cont < 11){
+                relev = relevanciaPalabras(i -> name, title, mapWords, mapBooks);
+                listNode *node = createlistNode();
+                node -> value = relev;
+                strcpy(node -> name, i -> name);
+                listPushFront(map, node);
+                cont++;
+            }else{
+                relev = relevanciaPalabras(i -> name, title, mapWords, mapBooks);
+                listNode *node = createlistNode();
+                node -> value = relev;
+                strcpy(node -> name, i -> name);
+
+                for(listNode *i = listFirst(map); i!=NULL; i = listNext(map)){
+                    if(i -> value < node -> value){
+                        listPushCurrent(map, node);
+                        listPopBack(map);
+                    }
+                }
+            }
         }
         found = 0;
     }
@@ -317,6 +332,7 @@ void showMostRelevant(char *titulo, Map *mapBooks, Map *mapWords){
         strcat(buf, i->name);
         strcat(buf, "\n");
     }
+
 
 }
 
@@ -380,16 +396,32 @@ void searchBook(Map* mapBooks){
 List *makeFrecencyTree(Map *mapWords, char *title){
     List *map = listCreate();
     int frecuency = 0;
+    int cont = 0;
     for(Word *i = firstMap(mapWords); i!= NULL; i = nextMap(mapWords)){
         for(Pos* j = listFirst(i->ocurrencias); j != NULL; j = listNext(i->ocurrencias) ){
             if(strcmp(j->bookName, title) == 0){
                 frecuency++;
             }
         }
-            listNode *node = createlistNode();
-            node -> value = frecuency;
-            strcpy(node -> name, i -> name);
-            listPushFront(map, node);
+            if(cont < 11){
+                listNode *node = createlistNode();
+                node -> value = frecuency;
+                strcpy(node -> name, i -> name);
+            
+                listPushFront(map, node);
+                cont++;
+            }else{
+                listNode *node = createlistNode();
+                node -> value = frecuency;
+                strcpy(node -> name, i -> name);
+
+                for(listNode *i = listFirst(map); i!=NULL; i = listNext(map)){
+                    if(i -> value < node -> value){
+                        listPushCurrent(map, node);
+                        listPopBack(map);
+                    }
+                }
+            }
     }
     return map;
 }
@@ -418,3 +450,45 @@ void searchMostFrecuent(Map *mapBooks, Map* mapWords){
 
     showMostFrecuent(titulo, mapBooks, mapWords);
 }
+
+
+
+void showBook(Map * mapBook) {
+    Book *aux = firstMap(mapBook);
+    while(aux != NULL){
+        strcat(buf, "ID: ");
+        strcat(buf, aux->fileName);
+        strcat(buf, "\n");
+        strcat(buf, "Titulo: ");
+        strcat(buf, aux->bookName);
+        strcat(buf, "\n");
+        strcat(buf, "Palabras: ");
+        char num[10];
+        sprintf(num, "%lo", aux->totalPalabras);
+        strcat(buf, num);
+        strcat(buf, "\n");
+        strcat(buf, "Caracteres: ");
+        sprintf(num, "%lo", aux->totalChar);
+        strcat(buf, num);
+        strcat(buf, "\n");
+        aux = nextMap(mapBook);
+    }
+
+}
+
+void context(Book *book, char * word){
+    char open[20];
+    strcpy(open, book -> fileName);
+    strcat(open, ".txt");
+    book -> arch = fopen(open, "r");
+    char * x = malloc(1024 * sizeof(char));
+    while (fscanf(book -> arch, "%[^\n] ", x) != EOF) {
+        //lower(x);
+        char * search = strstr(x,word);
+        if(search != NULL){
+            printf("> %s\n", x);
+        }
+        
+    }
+}
+
