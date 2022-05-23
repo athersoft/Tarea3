@@ -121,7 +121,8 @@ void import(char *name, Map * mapBooks, Map * mapWords){
     strcpy(book -> fileName, name);
     book -> totalChar = cont;
     book->totalPalabras = totalPalabras;
-    _pushFront(mapBooks, book -> bookName, book);
+    insertMap(mapBooks,book -> bookName,book);
+    //_pushFront(mapBooks, book -> bookName, book);
 
     listCreation(mapBooks, mapWords, book -> bookName);
     //free(text);
