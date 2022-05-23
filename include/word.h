@@ -2,12 +2,15 @@
 #define WORD_H
 #include "list.h"
 #include "map.h"
+#include "treemap.h"
 #include <stdio.h>
 
 typedef struct{
     Map * words;    //Cambie por un mapa de palabras
     char bookName[50];
     char fileName[20];
+    TreeMap *mostRelevant;
+    TreeMap *mostFrecuent;
     int totalPalabras;
     long totalChar; //Cuenta el total de caracteres del libro
     long totalWords;//Cuenta el total de palabras en libro
@@ -33,7 +36,7 @@ void searchWord(Map* mapWords);
 void showWords(Map*mapWords);
 void readBook(Book * book);             //Agregada
 void bookToMap(Map *mapBook, Book *book);//Agregada
-
+void searchBook(Map* mapBooks);
 //Funciones para comparar strings
 int is_equal_string(void * key1, void * key2);  
 int lower_than_string(void * key1, void * key2);
@@ -43,4 +46,5 @@ void showBook(Book *book);
 
 void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks);
 void searchContext(Map *mapWords, Map *mapBooks);
+TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title);
 #endif

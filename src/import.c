@@ -33,8 +33,8 @@ void wordsToMap(char *text, Map * mapWords, long int bookPos, char *title){
         listPushBack(word->ocurrencias, pos);
         word -> num++;
 
-        strcat(buf, text);
-        strcat(buf, " agregada ");
+        //strcat(buf, text);
+        //strcat(buf, " agregada ");
         //}
     }
     
@@ -59,7 +59,7 @@ void import(char *name, Map * mapBooks, Map * mapWords){
 
     int pos = 0;
     long cont = 0;
-    clrscr();
+    //clrscr();
 
    while(1){
         text[pos] = fgetc(file);
@@ -79,6 +79,7 @@ void import(char *name, Map * mapBooks, Map * mapWords){
                 
                 pos = 0;
             }else{
+                cont++;
                 pos++;
             }
         }else{
@@ -110,8 +111,10 @@ void import(char *name, Map * mapBooks, Map * mapWords){
     Book *book = createBook();
     strcpy(book -> bookName, title);
     strcpy(book -> fileName, name);
+    book -> totalChar = cont;
     book->totalPalabras = totalPalabras;
-    _pushFront(mapBooks, book -> bookName, book);
+    //book -> mostRelevant = makeRelevantTree(mapWords, mapBooks, book ->bookName);
+    _pushFront(mapBooks, book->bookName, book);
 
     //free(text);
     fclose(file);

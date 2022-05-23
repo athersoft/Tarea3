@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 
 //Comparar Strings
 int is_equal_string(void * key1, void * key2) {
@@ -15,6 +16,11 @@ int is_equal_string(void * key1, void * key2) {
 
 int lower_than_string(void * key1, void * key2) {
     if(strcmp((char*)key1, (char*)key2) < 0) return 1;
+    return 0;
+}
+
+int lower_than_int(void * key1, void * key2) {
+    if(*(int*)key1 < *(int*)key2) return 1;
     return 0;
 }
 
@@ -44,6 +50,8 @@ Book *createBook(){
     book->totalPalabras = 0;
     book -> totalChar = 0;
     book -> totalWords = 0;
+    book -> mostRelevant = createTreeMap(lower_than_int);
+    book -> mostFrecuent = createTreeMap(lower_than_int);
     return book;
 }
 
@@ -146,6 +154,47 @@ void bookToMap(Map *mapBook, Book *book){
     return;
 }
 
+void searchBook(Map* mapBooks){
+    //Word* aux = createWord();
+    char titulo[100];
+    printf("Ingresa la libro que quiere buscar: ");
+    fflush(stdin);
+    scanf("%[^\n]*s", titulo);
+    getchar();
+    char *token = (char *) malloc(sizeof(char)*50);
+    List* palabraTitulo = listCreate();
+    int cont = 0;
+    int validaciones;
+    token = strtok(titulo, " ");
+    //char aux[100];
+    while (token != NULL) {
+        listPushFront(palabraTitulo, token);
+        token = strtok(NULL, " ");
+        cont++;
+    }
+
+    for (Book* k = firstMap(mapBooks); k != NULL; k = nextMap(mapBooks)){
+
+        for (char* i = listFirst(palabraTitulo); i != NULL; i = listNext(palabraTitulo) ){
+
+            if (strstr(k->bookName, i)){
+                validaciones++;
+                strcat(buf, k->bookName);
+            }
+        }
+
+        /*if (validaciones == cont){
+            strcat(buf, k->bookName);
+            sprintf(aux, "Total de palabras: %i\nTotal de caracteres: %i", k->totalPalabras, k->totalWords);
+            strcat(buf, aux);
+        }*/
+    }
+
+
+
+
+
+}
 
 
 void searchWord(Map* mapWords){
@@ -155,6 +204,7 @@ void searchWord(Map* mapWords){
     fflush(stdin);
     scanf("%[^\n]*s", palabra);
     getchar();
+    
 
     //char last_book[50] = NULL;
 
@@ -191,7 +241,7 @@ void searchWord(Map* mapWords){
     int librosDiferentes = 0;
     double finalPart = 0;
     
-    char* lastBook;
+    char lastBook[100];
     strcpy ( lastBook, titulo);
 
     if (word != NULL && book != NULL){
@@ -209,7 +259,7 @@ void searchWord(Map* mapWords){
 
         double firstPart = totalOcurrencias / book->totalPalabras;
 
-        for (Book* i = firstMap(mapBooks); i != NULL; i = nextMap){
+        for (Book* i = firstMap(mapBooks); i != NULL; i = nextMap(mapBooks)){
             totalLibros++;
         }
 
@@ -219,14 +269,18 @@ void searchWord(Map* mapWords){
     }
 
     return finalPart;
+
 }*/
 
+/*
 void showPos(Word *word){
     for (Pos* i = listFirst(word->ocurrencias); i != NULL; i = listNext(word->ocurrencias) ){
         strcat(buf, i->bookName);
     }
 }
+*/
 
+/*
 void showWords(Map * mapWords){
     for(Word *word = firstMap(mapWords);
             word != NULL; 
@@ -237,7 +291,7 @@ void showWords(Map * mapWords){
         strcat(buf, "\n");
     }
 }
-
+*/
 
 void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks){
     Word *word = searchMap(mapWords, _word);
@@ -253,7 +307,7 @@ void showInContext(char *_word, char *_title, Map *mapWords, Map *mapBooks){
     FILE *file = fopen(book ->fileName , "r");
 
     char *mensaje = (char*) malloc(sizeof(char)*100);
-    
+
     clrscr();
     strcat(buf, "Ocurrencias en ");
     strcat(buf, _title);
@@ -286,6 +340,26 @@ void searchContext(Map *mapWords, Map *mapBooks){
     showInContext(palabra, titulo, mapWords, mapBooks);
 }
 
+TreeMap *makeRelevantTree(Map *mapWords, Map *mapBooks, char *title){
+    TreeMap *map = createTreeMap(lower_than_int);
+    int found = 0;
+    double relev = 0;
+    for(Word *i = firstMap(mapWords); i!= NULL; i = nextMap(mapWords)){
+        for(Pos* j = listFirst(i->ocurrencias); j != NULL; j = listNext(i->ocurrencias) ){
+            if(found == 0){
+                if(strcmp(j->bookName, title) == 0){
+                    found = 1;
+                    break;
+                }
+            }
+        }
+        if(found == 1){
+            relev = relevanciaPalabras(i -> name, title, mapWords, mapBooks);
+        }
+        found = 0;
+    }
+    return map;
+    
 void showMapBook(Map * mapBook){
     Book *aux = firstMap(mapBook);
     while (aux != NULL){
@@ -303,8 +377,6 @@ void showBook(Book *book) {
     printf("Caracteres: %d\n", book->totalChar);
 
 }
-
-
 
 /*Problemas
 
