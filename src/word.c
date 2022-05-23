@@ -150,23 +150,28 @@ void searchBook(Map* mapBooks){
     int cont = 0;
     int validaciones;
     token = strtok(titulo, " ");
-
+    //char aux[100];
     while (token != NULL) {
         listPushFront(palabraTitulo, token);
         token = strtok(NULL, " ");
         cont++;
     }
 
-    for (char* k = firstMap(mapBooks); k != NULL; k = nextMap(mapBooks)){
+    for (Book* k = firstMap(mapBooks); k != NULL; k = nextMap(mapBooks)){
+
         for (char* i = listFirst(palabraTitulo); i != NULL; i = listNext(palabraTitulo) ){
-            if (strstr(mapBooks->current->data, i)){
+
+            if (strstr(k->bookName, i)){
                 validaciones++;
+                strcat(buf, k->bookName);
             }
         }
 
-        if (validaciones == cont){
-            break;
-        }
+        /*if (validaciones == cont){
+            strcat(buf, k->bookName);
+            sprintf(aux, "Total de palabras: %i\nTotal de caracteres: %i", k->totalPalabras, k->totalWords);
+            strcat(buf, aux);
+        }*/
     }
 
 
