@@ -148,7 +148,7 @@ void importBook(Map* mapBooks, Map* mapWords) {
         }
     }else{
         fclose(file);
-        import(archivo, mapBooks, mapWords);
+        //import(archivo, mapBooks, mapWords);
     }
     fclose(file);
     import(archivo, mapBooks, mapWords);
