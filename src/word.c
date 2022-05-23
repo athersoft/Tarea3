@@ -340,7 +340,7 @@ void searchBook(Map* mapBooks){
     char *token = (char *) malloc(sizeof(char)*50);
     List* palabraTitulo = listCreate();
     int cont = 0;
-    int validaciones;
+    int validaciones = 0;
     token = strtok(titulo, " ");
     char aux[100];
     while (token != NULL) {
@@ -355,15 +355,17 @@ void searchBook(Map* mapBooks){
 
             if (strstr(k->bookName, i)){
                 validaciones++;
-                strcat(buf, k->bookName);
+                //strcat(buf, k->bookName);
+                if (validaciones == cont){
+                    strcat(buf, k->bookName);
+                    sprintf(aux, "Total de palabras: %i\nTotal de caracteres: %lo", k->totalPalabras, k->totalChar);
+                    strcat(buf, aux);
+                }
             }
+            
         }
 
-        if (validaciones == cont){
-            strcat(buf, k->bookName);
-            sprintf(aux, "Total de palabras: %i\nTotal de caracteres: %i", k->totalPalabras, k->totalWords);
-            strcat(buf, aux);
-        }
+        
     }
 
 
